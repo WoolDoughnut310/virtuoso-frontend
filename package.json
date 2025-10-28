@@ -1,5 +1,5 @@
 {
-  "name": "virtuoso",
+  "name": "virtuoso-frontend",
   "private": true,
   "type": "module",
   "scripts": {
