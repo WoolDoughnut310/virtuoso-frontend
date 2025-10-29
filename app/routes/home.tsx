@@ -1,19 +1,21 @@
 import type { Route } from "./+types/home";
+import WebRTCAudio from "~/components/WebRTCAudio";
 
 export function loader() {
-  return { name: "React Router" };
+    return { name: "React Router" };
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  return (
-    <div className="text-center p-4">
-      <h1 className="text-2xl">Hello, {loaderData.name}</h1>
-      <a
-        className="block mt-2 text-blue-500 underline hover:text-blue-600"
-        href="https://reactrouter.com/docs"
-      >
-        React Router Docs
-      </a>
-    </div>
-  );
+    return (
+        <div className="text-center p-4">
+            <h1 className="text-2xl">Hello, {loaderData.name}</h1>
+            <a
+                className="block mt-2 text-blue-500 underline hover:text-blue-600"
+                href="https://reactrouter.com/docs"
+            >
+                React Router Docs
+            </a>
+            <WebRTCAudio />
+        </div>
+    );
 }
