@@ -10,6 +10,19 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 
+import {
+  QueryClient,
+  QueryClientProvider
+} from '@tanstack/react-query';
+import { client } from "./client/client.gen";
+
+
+const queryClient = new QueryClient();
+
+client.setConfig({
+  baseUrl: "http://localhost:8000"
+});
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -20,7 +33,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
