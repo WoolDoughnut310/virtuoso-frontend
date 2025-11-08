@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostErrors, LoginForAccessTokenTokenPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, StartConcertConcertsStartPostData, StartConcertConcertsStartPostResponses, UploadFileConcertsUploadPostData, UploadFileConcertsUploadPostErrors, UploadFileConcertsUploadPostResponses } from './types.gen';
+import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostErrors, CreateConcertConcertsCreatePostResponses, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetErrors, DiscoverConcertsConcertsDiscoverGetResponses, GetConcertConcertsConcertIdGetData, GetConcertConcertsConcertIdGetErrors, GetConcertConcertsConcertIdGetResponses, LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostErrors, LoginForAccessTokenTokenPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, StartConcertConcertsStartConcertIdPostData, StartConcertConcertsStartConcertIdPostErrors, StartConcertConcertsStartConcertIdPostResponses, StopConcertConcertsStopConcertIdPostData, StopConcertConcertsStopConcertIdPostErrors, StopConcertConcertsStopConcertIdPostResponses, UploadFileConcertsUploadConcertIdPostData, UploadFileConcertsUploadConcertIdPostErrors, UploadFileConcertsUploadConcertIdPostResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -66,8 +66,8 @@ export const loginForAccessTokenTokenPost = <ThrowOnError extends boolean = fals
 /**
  * Upload File
  */
-export const uploadFileConcertsUploadPost = <ThrowOnError extends boolean = false>(options: Options<UploadFileConcertsUploadPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<UploadFileConcertsUploadPostResponses, UploadFileConcertsUploadPostErrors, ThrowOnError>({
+export const uploadFileConcertsUploadConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<UploadFileConcertsUploadConcertIdPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<UploadFileConcertsUploadConcertIdPostResponses, UploadFileConcertsUploadConcertIdPostErrors, ThrowOnError>({
         ...formDataBodySerializer,
         security: [
             {
@@ -75,7 +75,7 @@ export const uploadFileConcertsUploadPost = <ThrowOnError extends boolean = fals
                 type: 'http'
             }
         ],
-        url: '/concerts/upload',
+        url: '/concerts/upload/{concert_id}',
         ...options,
         headers: {
             'Content-Type': null,
@@ -87,15 +87,71 @@ export const uploadFileConcertsUploadPost = <ThrowOnError extends boolean = fals
 /**
  * Start Concert
  */
-export const startConcertConcertsStartPost = <ThrowOnError extends boolean = false>(options?: Options<StartConcertConcertsStartPostData, ThrowOnError>) => {
-    return (options?.client ?? client).post<StartConcertConcertsStartPostResponses, unknown, ThrowOnError>({
+export const startConcertConcertsStartConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<StartConcertConcertsStartConcertIdPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<StartConcertConcertsStartConcertIdPostResponses, StartConcertConcertsStartConcertIdPostErrors, ThrowOnError>({
         security: [
             {
                 scheme: 'bearer',
                 type: 'http'
             }
         ],
-        url: '/concerts/start',
+        url: '/concerts/start/{concert_id}',
+        ...options
+    });
+};
+
+/**
+ * Stop Concert
+ */
+export const stopConcertConcertsStopConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<StopConcertConcertsStopConcertIdPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<StopConcertConcertsStopConcertIdPostResponses, StopConcertConcertsStopConcertIdPostErrors, ThrowOnError>({
+        security: [
+            {
+                scheme: 'bearer',
+                type: 'http'
+            }
+        ],
+        url: '/concerts/stop/{concert_id}',
+        ...options
+    });
+};
+
+/**
+ * Create Concert
+ */
+export const createConcertConcertsCreatePost = <ThrowOnError extends boolean = false>(options: Options<CreateConcertConcertsCreatePostData, ThrowOnError>) => {
+    return (options.client ?? client).post<CreateConcertConcertsCreatePostResponses, CreateConcertConcertsCreatePostErrors, ThrowOnError>({
+        security: [
+            {
+                scheme: 'bearer',
+                type: 'http'
+            }
+        ],
+        url: '/concerts/create',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Discover Concerts
+ */
+export const discoverConcertsConcertsDiscoverGet = <ThrowOnError extends boolean = false>(options?: Options<DiscoverConcertsConcertsDiscoverGetData, ThrowOnError>) => {
+    return (options?.client ?? client).get<DiscoverConcertsConcertsDiscoverGetResponses, DiscoverConcertsConcertsDiscoverGetErrors, ThrowOnError>({
+        url: '/concerts/discover',
+        ...options
+    });
+};
+
+/**
+ * Get Concert
+ */
+export const getConcertConcertsConcertIdGet = <ThrowOnError extends boolean = false>(options: Options<GetConcertConcertsConcertIdGetData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetConcertConcertsConcertIdGetResponses, GetConcertConcertsConcertIdGetErrors, ThrowOnError>({
+        url: '/concerts/{concert_id}',
         ...options
     });
 };

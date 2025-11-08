@@ -35,13 +35,69 @@ export type BodyLoginForAccessTokenTokenPost = {
 };
 
 /**
- * Body_upload_file_concerts_upload_post
+ * Body_upload_file_concerts_upload__concert_id__post
  */
-export type BodyUploadFileConcertsUploadPost = {
+export type BodyUploadFileConcertsUploadConcertIdPost = {
     /**
      * File
      */
     file: Blob | File;
+};
+
+/**
+ * ConcertBase
+ */
+export type ConcertBase = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Start Time
+     */
+    start_time: string;
+    /**
+     * Max Capacity
+     */
+    max_capacity?: number;
+    /**
+     * Ticket Price
+     */
+    ticket_price: number;
+    /**
+     * Popularity
+     */
+    popularity?: number;
+};
+
+/**
+ * ConcertPublic
+ */
+export type ConcertPublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Start Time
+     */
+    start_time: string;
+    /**
+     * Max Capacity
+     */
+    max_capacity?: number;
+    /**
+     * Ticket Price
+     */
+    ticket_price: number;
+    /**
+     * Popularity
+     */
+    popularity?: number;
+    /**
+     * Id
+     */
+    id: number;
 };
 
 /**
@@ -85,10 +141,6 @@ export type UserCreate = {
      */
     full_name?: string | null;
     /**
-     * Is Artist
-     */
-    is_artist?: boolean;
-    /**
      * Password
      */
     password: string;
@@ -110,10 +162,6 @@ export type UserPublic = {
      * Full Name
      */
     full_name?: string | null;
-    /**
-     * Is Artist
-     */
-    is_artist?: boolean;
     /**
      * Id
      */
@@ -204,39 +252,183 @@ export type LoginForAccessTokenTokenPostResponses = {
 
 export type LoginForAccessTokenTokenPostResponse = LoginForAccessTokenTokenPostResponses[keyof LoginForAccessTokenTokenPostResponses];
 
-export type UploadFileConcertsUploadPostData = {
-    body: BodyUploadFileConcertsUploadPost;
-    path?: never;
+export type UploadFileConcertsUploadConcertIdPostData = {
+    body: BodyUploadFileConcertsUploadConcertIdPost;
+    path: {
+        /**
+         * Concert Id
+         */
+        concert_id: number;
+    };
     query?: never;
-    url: '/concerts/upload';
+    url: '/concerts/upload/{concert_id}';
 };
 
-export type UploadFileConcertsUploadPostErrors = {
+export type UploadFileConcertsUploadConcertIdPostErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type UploadFileConcertsUploadPostError = UploadFileConcertsUploadPostErrors[keyof UploadFileConcertsUploadPostErrors];
+export type UploadFileConcertsUploadConcertIdPostError = UploadFileConcertsUploadConcertIdPostErrors[keyof UploadFileConcertsUploadConcertIdPostErrors];
 
-export type UploadFileConcertsUploadPostResponses = {
+export type UploadFileConcertsUploadConcertIdPostResponses = {
     /**
      * Successful Response
      */
     200: unknown;
 };
 
-export type StartConcertConcertsStartPostData = {
+export type StartConcertConcertsStartConcertIdPostData = {
     body?: never;
+    path: {
+        /**
+         * Concert Id
+         */
+        concert_id: number;
+    };
+    query?: never;
+    url: '/concerts/start/{concert_id}';
+};
+
+export type StartConcertConcertsStartConcertIdPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type StartConcertConcertsStartConcertIdPostError = StartConcertConcertsStartConcertIdPostErrors[keyof StartConcertConcertsStartConcertIdPostErrors];
+
+export type StartConcertConcertsStartConcertIdPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type StopConcertConcertsStopConcertIdPostData = {
+    body?: never;
+    path: {
+        /**
+         * Concert Id
+         */
+        concert_id: number;
+    };
+    query?: never;
+    url: '/concerts/stop/{concert_id}';
+};
+
+export type StopConcertConcertsStopConcertIdPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type StopConcertConcertsStopConcertIdPostError = StopConcertConcertsStopConcertIdPostErrors[keyof StopConcertConcertsStopConcertIdPostErrors];
+
+export type StopConcertConcertsStopConcertIdPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type CreateConcertConcertsCreatePostData = {
+    body: ConcertBase;
     path?: never;
     query?: never;
-    url: '/concerts/start';
+    url: '/concerts/create';
 };
 
-export type StartConcertConcertsStartPostResponses = {
+export type CreateConcertConcertsCreatePostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreateConcertConcertsCreatePostError = CreateConcertConcertsCreatePostErrors[keyof CreateConcertConcertsCreatePostErrors];
+
+export type CreateConcertConcertsCreatePostResponses = {
     /**
      * Successful Response
      */
-    200: unknown;
+    200: ConcertPublic;
 };
+
+export type CreateConcertConcertsCreatePostResponse = CreateConcertConcertsCreatePostResponses[keyof CreateConcertConcertsCreatePostResponses];
+
+export type DiscoverConcertsConcertsDiscoverGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Limit
+         */
+        limit?: number;
+        /**
+         * Offset
+         */
+        offset?: number;
+        /**
+         * Sort By
+         *
+         * Sort order
+         */
+        sort_by?: 'upcoming' | 'popularity';
+    };
+    url: '/concerts/discover';
+};
+
+export type DiscoverConcertsConcertsDiscoverGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DiscoverConcertsConcertsDiscoverGetError = DiscoverConcertsConcertsDiscoverGetErrors[keyof DiscoverConcertsConcertsDiscoverGetErrors];
+
+export type DiscoverConcertsConcertsDiscoverGetResponses = {
+    /**
+     * Response Discover Concerts Concerts Discover Get
+     *
+     * Successful Response
+     */
+    200: Array<ConcertPublic>;
+};
+
+export type DiscoverConcertsConcertsDiscoverGetResponse = DiscoverConcertsConcertsDiscoverGetResponses[keyof DiscoverConcertsConcertsDiscoverGetResponses];
+
+export type GetConcertConcertsConcertIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Concert Id
+         */
+        concert_id: number;
+    };
+    query?: never;
+    url: '/concerts/{concert_id}';
+};
+
+export type GetConcertConcertsConcertIdGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetConcertConcertsConcertIdGetError = GetConcertConcertsConcertIdGetErrors[keyof GetConcertConcertsConcertIdGetErrors];
+
+export type GetConcertConcertsConcertIdGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: ConcertPublic;
+};
+
+export type GetConcertConcertsConcertIdGetResponse = GetConcertConcertsConcertIdGetResponses[keyof GetConcertConcertsConcertIdGetResponses];
