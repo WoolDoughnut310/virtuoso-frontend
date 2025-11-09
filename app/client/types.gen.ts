@@ -5,6 +5,20 @@ export type ClientOptions = {
 };
 
 /**
+ * ArtistPublic
+ */
+export type ArtistPublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Id
+     */
+    id: number;
+};
+
+/**
  * Body_login_for_access_token_token_post
  */
 export type BodyLoginForAccessTokenTokenPost = {
@@ -65,6 +79,10 @@ export type ConcertBase = {
      */
     ticket_price: number;
     /**
+     * Description
+     */
+    description?: string;
+    /**
      * Popularity
      */
     popularity?: number;
@@ -91,6 +109,10 @@ export type ConcertPublic = {
      */
     ticket_price: number;
     /**
+     * Description
+     */
+    description?: string;
+    /**
      * Popularity
      */
     popularity?: number;
@@ -98,6 +120,7 @@ export type ConcertPublic = {
      * Id
      */
     id: number;
+    artist: ArtistPublic;
 };
 
 /**
@@ -108,6 +131,20 @@ export type HttpValidationError = {
      * Detail
      */
     detail?: Array<ValidationError>;
+};
+
+/**
+ * PaginatedConcerts
+ */
+export type PaginatedConcerts = {
+    /**
+     * Items
+     */
+    items: Array<ConcertPublic>;
+    /**
+     * Hasmore
+     */
+    hasMore: boolean;
 };
 
 /**
@@ -394,11 +431,9 @@ export type DiscoverConcertsConcertsDiscoverGetError = DiscoverConcertsConcertsD
 
 export type DiscoverConcertsConcertsDiscoverGetResponses = {
     /**
-     * Response Discover Concerts Concerts Discover Get
-     *
      * Successful Response
      */
-    200: Array<ConcertPublic>;
+    200: PaginatedConcerts;
 };
 
 export type DiscoverConcertsConcertsDiscoverGetResponse = DiscoverConcertsConcertsDiscoverGetResponses[keyof DiscoverConcertsConcertsDiscoverGetResponses];
