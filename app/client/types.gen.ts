@@ -82,10 +82,6 @@ export type ConcertBase = {
      * Description
      */
     description?: string;
-    /**
-     * Popularity
-     */
-    popularity?: number;
 };
 
 /**
@@ -113,14 +109,36 @@ export type ConcertPublic = {
      */
     description?: string;
     /**
-     * Popularity
-     */
-    popularity?: number;
-    /**
      * Id
      */
     id: number;
     artist: ArtistPublic;
+};
+
+/**
+ * ConcertUpdate
+ */
+export type ConcertUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Start Time
+     */
+    start_time?: string | null;
+    /**
+     * Max Capacity
+     */
+    max_capacity?: number | null;
+    /**
+     * Ticket Price
+     */
+    ticket_price?: number | null;
+    /**
+     * Description
+     */
+    description?: string | null;
 };
 
 /**
@@ -438,6 +456,36 @@ export type DiscoverConcertsConcertsDiscoverGetResponses = {
 
 export type DiscoverConcertsConcertsDiscoverGetResponse = DiscoverConcertsConcertsDiscoverGetResponses[keyof DiscoverConcertsConcertsDiscoverGetResponses];
 
+export type DeleteConcertConcertsConcertIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Concert Id
+         */
+        concert_id: number;
+    };
+    query?: never;
+    url: '/concerts/{concert_id}';
+};
+
+export type DeleteConcertConcertsConcertIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteConcertConcertsConcertIdDeleteError = DeleteConcertConcertsConcertIdDeleteErrors[keyof DeleteConcertConcertsConcertIdDeleteErrors];
+
+export type DeleteConcertConcertsConcertIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type DeleteConcertConcertsConcertIdDeleteResponse = DeleteConcertConcertsConcertIdDeleteResponses[keyof DeleteConcertConcertsConcertIdDeleteResponses];
+
 export type GetConcertConcertsConcertIdGetData = {
     body?: never;
     path: {
@@ -467,3 +515,33 @@ export type GetConcertConcertsConcertIdGetResponses = {
 };
 
 export type GetConcertConcertsConcertIdGetResponse = GetConcertConcertsConcertIdGetResponses[keyof GetConcertConcertsConcertIdGetResponses];
+
+export type UpdateConcertConcertsConcertIdPatchData = {
+    body: ConcertUpdate;
+    path: {
+        /**
+         * Concert Id
+         */
+        concert_id: number;
+    };
+    query?: never;
+    url: '/concerts/{concert_id}';
+};
+
+export type UpdateConcertConcertsConcertIdPatchErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type UpdateConcertConcertsConcertIdPatchError = UpdateConcertConcertsConcertIdPatchErrors[keyof UpdateConcertConcertsConcertIdPatchErrors];
+
+export type UpdateConcertConcertsConcertIdPatchResponses = {
+    /**
+     * Successful Response
+     */
+    200: ConcertPublic;
+};
+
+export type UpdateConcertConcertsConcertIdPatchResponse = UpdateConcertConcertsConcertIdPatchResponses[keyof UpdateConcertConcertsConcertIdPatchResponses];

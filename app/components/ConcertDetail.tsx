@@ -1,57 +1,185 @@
-import { Clock } from "lucide-react";
-import type { ConcertPublic } from "~/client";
+import { Calendar } from "lucide-react";
+import { type ConcertUpdate, type ConcertPublic } from "~/client";
 import { formatUpcoming } from "~/lib/formatDateTime";
+import { ConcertDTPicker } from "./ConcertDTPicker";
+import { useForm, type SubmitHandler, Controller } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { updateConcertConcertsConcertIdPatchMutation } from "~/client/@tanstack/react-query.gen";
 
 export interface ConcertDetailProps {
+    concert_id: number;
     data: ConcertPublic;
     isOwner: boolean;
     isEditing: boolean;
+    setIsEditing: (value: boolean) => void;
 }
 
-export default function ConcertDetail({ data, isOwner, isEditing }: ConcertDetailProps) {
+export default function ConcertDetail({
+    concert_id,
+    data,
+    isOwner,
+    isEditing,
+    setIsEditing,
+}: ConcertDetailProps) {
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm<ConcertUpdate>({
+        defaultValues: {
+            start_time: data.start_time
+        }
+    });
+    const updateConcert = useMutation({
+        ...updateConcertConcertsConcertIdPatchMutation(),
+        onSuccess: () => {
+            setIsEditing(false);
+        }
+    });
+
+    const onSubmit: SubmitHandler<ConcertUpdate> = (data) => {
+        updateConcert.mutate({
+            body: data,
+            path: {
+                concert_id,
+            },
+        });
+    };
+
+    const isEditingMode = isOwner && isEditing;
+    const baseButtonClass =
+        "mt-5 hover:cursor-pointer transition transform hover:scale-105 rounded-2xl shadow-[0px_6px_12px_0px_rgba(0,0,0,0.15)] w-72 font-semibold flex justify-center items-center text-white font-playfair-display text-4xl px-3 py-10";
+    const baseInputClass =
+        "bg-transparent focus:outline-none border-b-[#c39f45] border-b-2 focus:border-b-[3px]";
+
     return (
         <div className="overflow-y-scroll">
             <div className="flex flex-row min-h-[calc(100vh-132px)] px-16 py-[75px]">
                 <div className="flex basis-3/5 pr-8 border-r-2 border-[#C39F45]/80">
+                    {/* Image element */}
                     <div className="w-full h-full bg-red-500 flex justify-center items-center">
                         <h1 className="text-8xl">INSERT HERO IMAGE</h1>
                     </div>
                 </div>
                 <div className="flex basis-2/5 flex-col justify-start items-end py-4">
-                    <h2 className="text-5xl font-medium font-playfair-display uppercase ">
+                    <h2 className="text-5xl font-medium font-playfair-display uppercase text-right">
                         {data.artist.name}
                     </h2>
-                    <h3 className="text-2xl font-normal font-ibm-plex-sans">
-                        {data.name}
-                    </h3>
+                    {isOwner && isEditing ? (
+                        <input
+                            type="text"
+                            className={`text-2xl font-normal font-ibm-plex-sans text-right ${baseInputClass}`}
+                            placeholder="Enter Concert Name"
+                            defaultValue={data.name}
+                            {...register("name")}
+                        />
+                    ) : (
+                        <h3 className="text-2xl font-normal font-ibm-plex-sans">
+                            {data.name}
+                        </h3>
+                    )}
                     <div className="flex flex-col justify-center items-center bg-[#F2F2F2] gap-8 w-72 rounded-4xl py-4 mt-16">
-                        <span className="text-2xl font-ibm-plex-sans bg-linear-to-b from-[#e0c279] to-[#a67c00] bg-clip-text text-transparent">
-                            ${data.ticket_price}
-                        </span>
-                        <div className="flex flex-col justify-center items-center gap-5 text-lg font-ibm-plex-sans text-[#282828]">
-                            <span className="small-caps">
-                                Sold 35 / {data.max_capacity}
+                        {isEditingMode ? (
+                            <div className="flex flex-row items-center text-2xl font-ibm-plex-sans text-[#C39F45]">
+                                <span className="mr-1">$</span>
+                                <input
+                                    type="text"
+                                    defaultValue={data.ticket_price}
+                                    className={`w-20 text-center ${baseInputClass} border-b-2 border-transparent focus:border-[#c39f45]`}
+                                    placeholder="0.00"
+                                    {...register("ticket_price", {
+                                        valueAsNumber: true,
+                                    })}
+                                />
+                            </div>
+                        ) : (
+                            <span className="text-2xl font-ibm-plex-sans bg-linear-to-b from-[#e0c279] to-[#a67c00] bg-clip-text text-transparent">
+                                ${data.ticket_price}
                             </span>
-                            <div className="flex flex-row gap-2">
-                                <Clock size={24} />
-                                {formatUpcoming(data.start_time)}
+                        )}
+                        <div className="flex flex-col justify-center items-center gap-5 text-lg font-ibm-plex-sans text-[#282828]">
+                            {isEditingMode ? (
+                                <input
+                                    type="number"
+                                    defaultValue={data.max_capacity}
+                                    className={`small-caps w-20 text-right ${baseInputClass}`}
+                                    {...register("max_capacity", {
+                                        valueAsNumber: true,
+                                    })}
+                                />
+                            ) : (
+                                <span className="small-caps">
+                                    Sold 35 / {data.max_capacity}
+                                </span>
+                            )}
+                            <div className="flex flex-row gap-2 items-center">
+                                {isEditingMode ? (
+                                    <Controller
+                                        control={control}
+                                        name="start_time"
+                                        render={({ field }) => {
+                                            const dateValue = field.value
+                                                ? new Date(field.value)
+                                                : new Date();
+
+                                            return (
+                                                <ConcertDTPicker
+                                                    value={dateValue}
+                                                    onChange={(
+                                                        dateObject: Date
+                                                    ) => {
+                                                        field.onChange(
+                                                            dateObject.toISOString()
+                                                        );
+                                                    }}
+                                                />
+                                            );
+                                        }}
+                                    />
+                                ) : (
+                                    <>
+                                        <Calendar size={24} />
+                                        {formatUpcoming(data.start_time)}
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
-                    <button
-                        type="button"
-                        className="mt-5 hover:cursor-pointer transition transform hover:scale-105 rounded-2xl shadow-[0px_6px_12px_0px_rgba(0,0,0,0.15)] w-72 font-semibold flex justify-center items-center text-white font-playfair-display text-4xl px-3 py-10 bg-[#ccac54FF] hover:bg-[#c39f45]"
-                    >
-                        Buy Access
-                    </button>
+                    {isEditingMode ? (
+                        <button
+                            type="button"
+                            className={`${baseButtonClass} bg-[#C39F45] hover:bg-[#A88C3E]`}
+                            onClick={handleSubmit(onSubmit)}
+                        >
+                            Save Changes
+                        </button>
+                    ) : (
+                        <button
+                            type="button"
+                            className={`${baseButtonClass} bg-[#ccac54FF] hover:bg-[#c39f45]`}
+                        >
+                            Buy Access
+                        </button>
+                    )}
                 </div>
             </div>
             <div className="flex flex-col px-48 py-16 gap-3">
                 <h4 className="font-playfair-display text-[#c39f45] font-medium text-2xl uppercase">
                     The Story
                 </h4>
-                <p className="text-[#282828] text-lg leading-normal font-normal">
-                    {data.description || `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                {isEditingMode ? (
+                    <textarea
+                        defaultValue={data.description || ""}
+                        rows={6}
+                        {...register("description")}
+                        className={`text-[#282828] text-lg leading-normal font-normal ${baseInputClass} border-2 border-[#e0e0e0] p-3 rounded-lg focus:border-[#C39F45]`}
+                        placeholder="Describe the concert experience, including the mood and theme."
+                    />
+                ) : (
+                    <p className="text-[#282828] text-lg leading-normal font-normal">
+                        {data.description ||
+                            `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                     ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -59,7 +187,8 @@ export default function ConcertDetail({ data, isOwner, isEditing }: ConcertDetai
                     esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
                     occaecat cupidatat non proident, sunt in culpa qui officia
                     deserunt mollit anim id est laborum.`}
-                </p>
+                    </p>
+                )}
             </div>
         </div>
     );

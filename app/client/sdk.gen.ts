@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostErrors, CreateConcertConcertsCreatePostResponses, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetErrors, DiscoverConcertsConcertsDiscoverGetResponses, GetConcertConcertsConcertIdGetData, GetConcertConcertsConcertIdGetErrors, GetConcertConcertsConcertIdGetResponses, LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostErrors, LoginForAccessTokenTokenPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, StartConcertConcertsStartConcertIdPostData, StartConcertConcertsStartConcertIdPostErrors, StartConcertConcertsStartConcertIdPostResponses, StopConcertConcertsStopConcertIdPostData, StopConcertConcertsStopConcertIdPostErrors, StopConcertConcertsStopConcertIdPostResponses, UploadFileConcertsUploadConcertIdPostData, UploadFileConcertsUploadConcertIdPostErrors, UploadFileConcertsUploadConcertIdPostResponses } from './types.gen';
+import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostErrors, CreateConcertConcertsCreatePostResponses, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteErrors, DeleteConcertConcertsConcertIdDeleteResponses, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetErrors, DiscoverConcertsConcertsDiscoverGetResponses, GetConcertConcertsConcertIdGetData, GetConcertConcertsConcertIdGetErrors, GetConcertConcertsConcertIdGetResponses, LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostErrors, LoginForAccessTokenTokenPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, StartConcertConcertsStartConcertIdPostData, StartConcertConcertsStartConcertIdPostErrors, StartConcertConcertsStartConcertIdPostResponses, StopConcertConcertsStopConcertIdPostData, StopConcertConcertsStopConcertIdPostErrors, StopConcertConcertsStopConcertIdPostResponses, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchErrors, UpdateConcertConcertsConcertIdPatchResponses, UploadFileConcertsUploadConcertIdPostData, UploadFileConcertsUploadConcertIdPostErrors, UploadFileConcertsUploadConcertIdPostResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -147,11 +147,47 @@ export const discoverConcertsConcertsDiscoverGet = <ThrowOnError extends boolean
 };
 
 /**
+ * Delete Concert
+ */
+export const deleteConcertConcertsConcertIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteConcertConcertsConcertIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteConcertConcertsConcertIdDeleteResponses, DeleteConcertConcertsConcertIdDeleteErrors, ThrowOnError>({
+        security: [
+            {
+                scheme: 'bearer',
+                type: 'http'
+            }
+        ],
+        url: '/concerts/{concert_id}',
+        ...options
+    });
+};
+
+/**
  * Get Concert
  */
 export const getConcertConcertsConcertIdGet = <ThrowOnError extends boolean = false>(options: Options<GetConcertConcertsConcertIdGetData, ThrowOnError>) => {
     return (options.client ?? client).get<GetConcertConcertsConcertIdGetResponses, GetConcertConcertsConcertIdGetErrors, ThrowOnError>({
         url: '/concerts/{concert_id}',
         ...options
+    });
+};
+
+/**
+ * Update Concert
+ */
+export const updateConcertConcertsConcertIdPatch = <ThrowOnError extends boolean = false>(options: Options<UpdateConcertConcertsConcertIdPatchData, ThrowOnError>) => {
+    return (options.client ?? client).patch<UpdateConcertConcertsConcertIdPatchResponses, UpdateConcertConcertsConcertIdPatchErrors, ThrowOnError>({
+        security: [
+            {
+                scheme: 'bearer',
+                type: 'http'
+            }
+        ],
+        url: '/concerts/{concert_id}',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
     });
 };

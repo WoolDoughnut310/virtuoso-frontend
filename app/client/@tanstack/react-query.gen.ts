@@ -3,8 +3,8 @@
 import { type InfiniteData, infiniteQueryOptions, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { createConcertConcertsCreatePost, discoverConcertsConcertsDiscoverGet, getConcertConcertsConcertIdGet, loginForAccessTokenTokenPost, type Options, readUsersMeMeGet, registerUserRegisterPost, startConcertConcertsStartConcertIdPost, stopConcertConcertsStopConcertIdPost, uploadFileConcertsUploadConcertIdPost } from '../sdk.gen';
-import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostError, CreateConcertConcertsCreatePostResponse, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetError, DiscoverConcertsConcertsDiscoverGetResponse, GetConcertConcertsConcertIdGetData, LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostError, LoginForAccessTokenTokenPostResponse, ReadUsersMeMeGetData, RegisterUserRegisterPostData, RegisterUserRegisterPostError, RegisterUserRegisterPostResponse, StartConcertConcertsStartConcertIdPostData, StartConcertConcertsStartConcertIdPostError, StopConcertConcertsStopConcertIdPostData, StopConcertConcertsStopConcertIdPostError, UploadFileConcertsUploadConcertIdPostData, UploadFileConcertsUploadConcertIdPostError } from '../types.gen';
+import { createConcertConcertsCreatePost, deleteConcertConcertsConcertIdDelete, discoverConcertsConcertsDiscoverGet, getConcertConcertsConcertIdGet, loginForAccessTokenTokenPost, type Options, readUsersMeMeGet, registerUserRegisterPost, startConcertConcertsStartConcertIdPost, stopConcertConcertsStopConcertIdPost, updateConcertConcertsConcertIdPatch, uploadFileConcertsUploadConcertIdPost } from '../sdk.gen';
+import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostError, CreateConcertConcertsCreatePostResponse, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteError, DeleteConcertConcertsConcertIdDeleteResponse, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetError, DiscoverConcertsConcertsDiscoverGetResponse, GetConcertConcertsConcertIdGetData, LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostError, LoginForAccessTokenTokenPostResponse, ReadUsersMeMeGetData, RegisterUserRegisterPostData, RegisterUserRegisterPostError, RegisterUserRegisterPostResponse, StartConcertConcertsStartConcertIdPostData, StartConcertConcertsStartConcertIdPostError, StopConcertConcertsStopConcertIdPostData, StopConcertConcertsStopConcertIdPostError, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchError, UpdateConcertConcertsConcertIdPatchResponse, UploadFileConcertsUploadConcertIdPostData, UploadFileConcertsUploadConcertIdPostError } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -243,6 +243,23 @@ export const discoverConcertsConcertsDiscoverGetInfiniteOptions = (options?: Opt
     });
 };
 
+/**
+ * Delete Concert
+ */
+export const deleteConcertConcertsConcertIdDeleteMutation = (options?: Partial<Options<DeleteConcertConcertsConcertIdDeleteData>>): UseMutationOptions<DeleteConcertConcertsConcertIdDeleteResponse, DeleteConcertConcertsConcertIdDeleteError, Options<DeleteConcertConcertsConcertIdDeleteData>> => {
+    const mutationOptions: UseMutationOptions<DeleteConcertConcertsConcertIdDeleteResponse, DeleteConcertConcertsConcertIdDeleteError, Options<DeleteConcertConcertsConcertIdDeleteData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await deleteConcertConcertsConcertIdDelete({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
 export const getConcertConcertsConcertIdGetQueryKey = (options: Options<GetConcertConcertsConcertIdGetData>) => createQueryKey('getConcertConcertsConcertIdGet', options);
 
 /**
@@ -261,4 +278,21 @@ export const getConcertConcertsConcertIdGetOptions = (options: Options<GetConcer
         },
         queryKey: getConcertConcertsConcertIdGetQueryKey(options)
     });
+};
+
+/**
+ * Update Concert
+ */
+export const updateConcertConcertsConcertIdPatchMutation = (options?: Partial<Options<UpdateConcertConcertsConcertIdPatchData>>): UseMutationOptions<UpdateConcertConcertsConcertIdPatchResponse, UpdateConcertConcertsConcertIdPatchError, Options<UpdateConcertConcertsConcertIdPatchData>> => {
+    const mutationOptions: UseMutationOptions<UpdateConcertConcertsConcertIdPatchResponse, UpdateConcertConcertsConcertIdPatchError, Options<UpdateConcertConcertsConcertIdPatchData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await updateConcertConcertsConcertIdPatch({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
 };

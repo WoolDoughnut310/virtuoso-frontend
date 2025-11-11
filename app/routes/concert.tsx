@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ConcertDetail from "~/components/ConcertDetail";
 import type { Route } from "./+types/concert";
 import { useQuery } from "@tanstack/react-query";
@@ -9,18 +9,23 @@ import { useLayoutContext } from "~/components/LayoutProvider";
 import ViewEditToggle from "~/components/ViewEditToggle";
 
 export default function Concert({ params }: Route.ComponentProps) {
-    const [searchParams, _] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const isEditing = searchParams.get("mode") === "edit";
+    const concert_id = Number(params.concert_id);
     var { isPending, isError, data, error } = useQuery({
         ...getConcertConcertsConcertIdGetOptions({
             path: {
-                concert_id: Number(params.concert_id),
+                concert_id,
             },
         }),
     });
     const { setAdminControls } = useLayoutContext();
 
-    const toggleComponent = <ViewEditToggle />;
+    const setIsEditing = (value: boolean) => {
+        setSearchParams({ mode: value ? "edit" : "view" });
+    }
+
+    const toggleComponent = <ViewEditToggle isEditing={isEditing} setIsEditing={setIsEditing} />;
 
     const isOwner = true;
 
@@ -34,11 +39,18 @@ export default function Concert({ params }: Route.ComponentProps) {
         return () => setAdminControls(null);
     }, [setAdminControls]);
 
-    isPending = true;
-
     if (isPending) return <ConcertSkeleton />;
 
-    if ((isError && error) || !data) return <div>Error loading concert details: {error?.message}</div>;
+    if ((isError && error) || !data)
+        return <div>Error loading concert details: {error?.message}</div>;
 
-    return <ConcertDetail data={data} isOwner={isOwner} isEditing={isEditing} />;
+    return (
+        <ConcertDetail
+            concert_id={concert_id}
+            data={data}
+            isOwner={isOwner}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+        />
+    );
 }
