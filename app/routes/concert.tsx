@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import ConcertView from "~/components/ConcertView";
-import ConcertEditor from "~/components/ConcertEditor";
+import ConcertDetail from "~/components/ConcertDetail";
 import type { Route } from "./+types/concert";
 import { useQuery } from "@tanstack/react-query";
 import { getConcertConcertsConcertIdGetOptions } from "~/client/@tanstack/react-query.gen";
@@ -11,8 +10,8 @@ import ViewEditToggle from "~/components/ViewEditToggle";
 
 export default function Concert({ params }: Route.ComponentProps) {
     const [searchParams, _] = useSearchParams();
-    const editing = searchParams.get("mode") === "edit";
-    const { isPending, isError, data, error } = useQuery({
+    const isEditing = searchParams.get("mode") === "edit";
+    var { isPending, isError, data, error } = useQuery({
         ...getConcertConcertsConcertIdGetOptions({
             path: {
                 concert_id: Number(params.concert_id),
@@ -35,13 +34,11 @@ export default function Concert({ params }: Route.ComponentProps) {
         return () => setAdminControls(null);
     }, [setAdminControls]);
 
+    isPending = true;
+
     if (isPending) return <ConcertSkeleton />;
 
-    if (!isOwner) return <ConcertView data={data} />;
+    if ((isError && error) || !data) return <div>Error loading concert details: {error?.message}</div>;
 
-    if (editing) {
-        return <ConcertEditor data={data} />;
-    }
-
-    return <ConcertView data={data} />;
+    return <ConcertDetail data={data} isOwner={isOwner} isEditing={isEditing} />;
 }

@@ -2,7 +2,13 @@ import { Clock } from "lucide-react";
 import type { ConcertPublic } from "~/client";
 import { formatUpcoming } from "~/lib/formatDateTime";
 
-export default function ConcertView({ data }: { data: ConcertPublic }) {
+export interface ConcertDetailProps {
+    data: ConcertPublic;
+    isOwner: boolean;
+    isEditing: boolean;
+}
+
+export default function ConcertDetail({ data, isOwner, isEditing }: ConcertDetailProps) {
     return (
         <div className="overflow-y-scroll">
             <div className="flex flex-row min-h-[calc(100vh-132px)] px-16 py-[75px]">
