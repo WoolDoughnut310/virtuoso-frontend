@@ -5,6 +5,8 @@ import { ConcertDTPicker } from "./ConcertDTPicker";
 import { useForm, type SubmitHandler, Controller } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { updateConcertConcertsConcertIdPatchMutation } from "~/client/@tanstack/react-query.gen";
+import { ImageUploader } from "./ImageUploader";
+import HeroImage from "./HeroImage";
 
 export interface ConcertDetailProps {
     concert_id: number;
@@ -28,14 +30,15 @@ export default function ConcertDetail({
         formState: { errors },
     } = useForm<ConcertUpdate>({
         defaultValues: {
-            start_time: data.start_time
-        }
+            start_time: data.start_time,
+            cover_image_url: data.cover_image_url,
+        },
     });
     const updateConcert = useMutation({
         ...updateConcertConcertsConcertIdPatchMutation(),
         onSuccess: () => {
             setIsEditing(false);
-        }
+        },
     });
 
     const onSubmit: SubmitHandler<ConcertUpdate> = (data) => {
@@ -48,6 +51,7 @@ export default function ConcertDetail({
     };
 
     const isEditingMode = isOwner && isEditing;
+
     const baseButtonClass =
         "mt-5 hover:cursor-pointer transition transform hover:scale-105 rounded-2xl shadow-[0px_6px_12px_0px_rgba(0,0,0,0.15)] w-72 font-semibold flex justify-center items-center text-white font-playfair-display text-4xl px-3 py-10";
     const baseInputClass =
@@ -57,10 +61,19 @@ export default function ConcertDetail({
         <div className="overflow-y-scroll">
             <div className="flex flex-row min-h-[calc(100vh-132px)] px-16 py-[75px]">
                 <div className="flex basis-3/5 pr-8 border-r-2 border-[#C39F45]/80">
-                    {/* Image element */}
-                    <div className="w-full h-full bg-red-500 flex justify-center items-center">
-                        <h1 className="text-8xl">INSERT HERO IMAGE</h1>
-                    </div>
+                    {isEditingMode ? (
+                        <ImageUploader
+                            control={control}
+                            concert_id={concert_id}
+                        />
+                    ) : (
+                        <div className="w-full h-full relative overflow-hidden bg-[#F2F2F2] rounded-lg">
+                            <HeroImage
+                                src={data.cover_image_url}
+                                alt={`Hero image for ${data.artist.name} concert`}
+                            />
+                        </div>
+                    )}
                 </div>
                 <div className="flex basis-2/5 flex-col justify-start items-end py-4">
                     <h2 className="text-5xl font-medium font-playfair-display uppercase text-right">
