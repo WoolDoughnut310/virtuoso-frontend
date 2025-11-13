@@ -3,8 +3,8 @@
 import { type InfiniteData, infiniteQueryOptions, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { createConcertConcertsCreatePost, deleteConcertConcertsConcertIdDelete, discoverConcertsConcertsDiscoverGet, getConcertConcertsConcertIdGet, loginForAccessTokenTokenPost, type Options, readUsersMeMeGet, registerUserRegisterPost, startConcertConcertsStartConcertIdPost, stopConcertConcertsStopConcertIdPost, updateConcertConcertsConcertIdPatch, uploadFileConcertsUploadConcertIdPost } from '../sdk.gen';
-import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostError, CreateConcertConcertsCreatePostResponse, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteError, DeleteConcertConcertsConcertIdDeleteResponse, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetError, DiscoverConcertsConcertsDiscoverGetResponse, GetConcertConcertsConcertIdGetData, LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostError, LoginForAccessTokenTokenPostResponse, ReadUsersMeMeGetData, RegisterUserRegisterPostData, RegisterUserRegisterPostError, RegisterUserRegisterPostResponse, StartConcertConcertsStartConcertIdPostData, StartConcertConcertsStartConcertIdPostError, StopConcertConcertsStopConcertIdPostData, StopConcertConcertsStopConcertIdPostError, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchError, UpdateConcertConcertsConcertIdPatchResponse, UploadFileConcertsUploadConcertIdPostData, UploadFileConcertsUploadConcertIdPostError } from '../types.gen';
+import { createConcertConcertsCreatePost, deleteConcertConcertsConcertIdDelete, discoverConcertsConcertsDiscoverGet, getConcertConcertsConcertIdGet, loginForAccessTokenTokenPost, type Options, readUsersMeMeGet, registerUserRegisterPost, startConcertConcertsStartConcertIdPost, stopConcertConcertsStopConcertIdPost, updateConcertConcertsConcertIdPatch, uploadConcertImageConcertsUploadImageConcertIdPost, uploadFileConcertsUploadSongConcertIdPost } from '../sdk.gen';
+import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostError, CreateConcertConcertsCreatePostResponse, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteError, DeleteConcertConcertsConcertIdDeleteResponse, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetError, DiscoverConcertsConcertsDiscoverGetResponse, GetConcertConcertsConcertIdGetData, LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostError, LoginForAccessTokenTokenPostResponse, ReadUsersMeMeGetData, RegisterUserRegisterPostData, RegisterUserRegisterPostError, RegisterUserRegisterPostResponse, StartConcertConcertsStartConcertIdPostData, StartConcertConcertsStartConcertIdPostError, StopConcertConcertsStopConcertIdPostData, StopConcertConcertsStopConcertIdPostError, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchError, UpdateConcertConcertsConcertIdPatchResponse, UploadConcertImageConcertsUploadImageConcertIdPostData, UploadConcertImageConcertsUploadImageConcertIdPostError, UploadConcertImageConcertsUploadImageConcertIdPostResponse, UploadFileConcertsUploadSongConcertIdPostData, UploadFileConcertsUploadSongConcertIdPostError } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -96,12 +96,29 @@ export const loginForAccessTokenTokenPostMutation = (options?: Partial<Options<L
 };
 
 /**
+ * Upload Concert Image
+ */
+export const uploadConcertImageConcertsUploadImageConcertIdPostMutation = (options?: Partial<Options<UploadConcertImageConcertsUploadImageConcertIdPostData>>): UseMutationOptions<UploadConcertImageConcertsUploadImageConcertIdPostResponse, UploadConcertImageConcertsUploadImageConcertIdPostError, Options<UploadConcertImageConcertsUploadImageConcertIdPostData>> => {
+    const mutationOptions: UseMutationOptions<UploadConcertImageConcertsUploadImageConcertIdPostResponse, UploadConcertImageConcertsUploadImageConcertIdPostError, Options<UploadConcertImageConcertsUploadImageConcertIdPostData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await uploadConcertImageConcertsUploadImageConcertIdPost({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
  * Upload File
  */
-export const uploadFileConcertsUploadConcertIdPostMutation = (options?: Partial<Options<UploadFileConcertsUploadConcertIdPostData>>): UseMutationOptions<unknown, UploadFileConcertsUploadConcertIdPostError, Options<UploadFileConcertsUploadConcertIdPostData>> => {
-    const mutationOptions: UseMutationOptions<unknown, UploadFileConcertsUploadConcertIdPostError, Options<UploadFileConcertsUploadConcertIdPostData>> = {
+export const uploadFileConcertsUploadSongConcertIdPostMutation = (options?: Partial<Options<UploadFileConcertsUploadSongConcertIdPostData>>): UseMutationOptions<unknown, UploadFileConcertsUploadSongConcertIdPostError, Options<UploadFileConcertsUploadSongConcertIdPostData>> => {
+    const mutationOptions: UseMutationOptions<unknown, UploadFileConcertsUploadSongConcertIdPostError, Options<UploadFileConcertsUploadSongConcertIdPostData>> = {
         mutationFn: async (fnOptions) => {
-            const { data } = await uploadFileConcertsUploadConcertIdPost({
+            const { data } = await uploadFileConcertsUploadSongConcertIdPost({
                 ...options,
                 ...fnOptions,
                 throwOnError: true

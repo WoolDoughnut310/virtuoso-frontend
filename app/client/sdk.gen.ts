@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostErrors, CreateConcertConcertsCreatePostResponses, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteErrors, DeleteConcertConcertsConcertIdDeleteResponses, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetErrors, DiscoverConcertsConcertsDiscoverGetResponses, GetConcertConcertsConcertIdGetData, GetConcertConcertsConcertIdGetErrors, GetConcertConcertsConcertIdGetResponses, LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostErrors, LoginForAccessTokenTokenPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, StartConcertConcertsStartConcertIdPostData, StartConcertConcertsStartConcertIdPostErrors, StartConcertConcertsStartConcertIdPostResponses, StopConcertConcertsStopConcertIdPostData, StopConcertConcertsStopConcertIdPostErrors, StopConcertConcertsStopConcertIdPostResponses, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchErrors, UpdateConcertConcertsConcertIdPatchResponses, UploadFileConcertsUploadConcertIdPostData, UploadFileConcertsUploadConcertIdPostErrors, UploadFileConcertsUploadConcertIdPostResponses } from './types.gen';
+import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostErrors, CreateConcertConcertsCreatePostResponses, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteErrors, DeleteConcertConcertsConcertIdDeleteResponses, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetErrors, DiscoverConcertsConcertsDiscoverGetResponses, GetConcertConcertsConcertIdGetData, GetConcertConcertsConcertIdGetErrors, GetConcertConcertsConcertIdGetResponses, LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostErrors, LoginForAccessTokenTokenPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, StartConcertConcertsStartConcertIdPostData, StartConcertConcertsStartConcertIdPostErrors, StartConcertConcertsStartConcertIdPostResponses, StopConcertConcertsStopConcertIdPostData, StopConcertConcertsStopConcertIdPostErrors, StopConcertConcertsStopConcertIdPostResponses, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchErrors, UpdateConcertConcertsConcertIdPatchResponses, UploadConcertImageConcertsUploadImageConcertIdPostData, UploadConcertImageConcertsUploadImageConcertIdPostErrors, UploadConcertImageConcertsUploadImageConcertIdPostResponses, UploadFileConcertsUploadSongConcertIdPostData, UploadFileConcertsUploadSongConcertIdPostErrors, UploadFileConcertsUploadSongConcertIdPostResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -64,10 +64,10 @@ export const loginForAccessTokenTokenPost = <ThrowOnError extends boolean = fals
 };
 
 /**
- * Upload File
+ * Upload Concert Image
  */
-export const uploadFileConcertsUploadConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<UploadFileConcertsUploadConcertIdPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<UploadFileConcertsUploadConcertIdPostResponses, UploadFileConcertsUploadConcertIdPostErrors, ThrowOnError>({
+export const uploadConcertImageConcertsUploadImageConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<UploadConcertImageConcertsUploadImageConcertIdPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<UploadConcertImageConcertsUploadImageConcertIdPostResponses, UploadConcertImageConcertsUploadImageConcertIdPostErrors, ThrowOnError>({
         ...formDataBodySerializer,
         security: [
             {
@@ -75,7 +75,28 @@ export const uploadFileConcertsUploadConcertIdPost = <ThrowOnError extends boole
                 type: 'http'
             }
         ],
-        url: '/concerts/upload/{concert_id}',
+        url: '/concerts/upload-image/{concert_id}',
+        ...options,
+        headers: {
+            'Content-Type': null,
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Upload File
+ */
+export const uploadFileConcertsUploadSongConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<UploadFileConcertsUploadSongConcertIdPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<UploadFileConcertsUploadSongConcertIdPostResponses, UploadFileConcertsUploadSongConcertIdPostErrors, ThrowOnError>({
+        ...formDataBodySerializer,
+        security: [
+            {
+                scheme: 'bearer',
+                type: 'http'
+            }
+        ],
+        url: '/concerts/upload-song/{concert_id}',
         ...options,
         headers: {
             'Content-Type': null,

@@ -49,9 +49,19 @@ export type BodyLoginForAccessTokenTokenPost = {
 };
 
 /**
- * Body_upload_file_concerts_upload__concert_id__post
+ * Body_upload_concert_image_concerts_upload_image__concert_id__post
  */
-export type BodyUploadFileConcertsUploadConcertIdPost = {
+export type BodyUploadConcertImageConcertsUploadImageConcertIdPost = {
+    /**
+     * File
+     */
+    file: Blob | File;
+};
+
+/**
+ * Body_upload_file_concerts_upload_song__concert_id__post
+ */
+export type BodyUploadFileConcertsUploadSongConcertIdPost = {
     /**
      * File
      */
@@ -82,6 +92,10 @@ export type ConcertBase = {
      * Description
      */
     description?: string;
+    /**
+     * Cover Image Url
+     */
+    cover_image_url?: string | null;
 };
 
 /**
@@ -108,6 +122,10 @@ export type ConcertPublic = {
      * Description
      */
     description?: string;
+    /**
+     * Cover Image Url
+     */
+    cover_image_url?: string | null;
     /**
      * Id
      */
@@ -139,6 +157,10 @@ export type ConcertUpdate = {
      * Description
      */
     description?: string | null;
+    /**
+     * Cover Image Url
+     */
+    cover_image_url?: string | null;
 };
 
 /**
@@ -149,6 +171,16 @@ export type HttpValidationError = {
      * Detail
      */
     detail?: Array<ValidationError>;
+};
+
+/**
+ * ImageUploadResponse
+ */
+export type ImageUploadResponse = {
+    /**
+     * Cover Image Url
+     */
+    cover_image_url: string;
 };
 
 /**
@@ -307,8 +339,8 @@ export type LoginForAccessTokenTokenPostResponses = {
 
 export type LoginForAccessTokenTokenPostResponse = LoginForAccessTokenTokenPostResponses[keyof LoginForAccessTokenTokenPostResponses];
 
-export type UploadFileConcertsUploadConcertIdPostData = {
-    body: BodyUploadFileConcertsUploadConcertIdPost;
+export type UploadConcertImageConcertsUploadImageConcertIdPostData = {
+    body: BodyUploadConcertImageConcertsUploadImageConcertIdPost;
     path: {
         /**
          * Concert Id
@@ -316,19 +348,49 @@ export type UploadFileConcertsUploadConcertIdPostData = {
         concert_id: number;
     };
     query?: never;
-    url: '/concerts/upload/{concert_id}';
+    url: '/concerts/upload-image/{concert_id}';
 };
 
-export type UploadFileConcertsUploadConcertIdPostErrors = {
+export type UploadConcertImageConcertsUploadImageConcertIdPostErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type UploadFileConcertsUploadConcertIdPostError = UploadFileConcertsUploadConcertIdPostErrors[keyof UploadFileConcertsUploadConcertIdPostErrors];
+export type UploadConcertImageConcertsUploadImageConcertIdPostError = UploadConcertImageConcertsUploadImageConcertIdPostErrors[keyof UploadConcertImageConcertsUploadImageConcertIdPostErrors];
 
-export type UploadFileConcertsUploadConcertIdPostResponses = {
+export type UploadConcertImageConcertsUploadImageConcertIdPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: ImageUploadResponse;
+};
+
+export type UploadConcertImageConcertsUploadImageConcertIdPostResponse = UploadConcertImageConcertsUploadImageConcertIdPostResponses[keyof UploadConcertImageConcertsUploadImageConcertIdPostResponses];
+
+export type UploadFileConcertsUploadSongConcertIdPostData = {
+    body: BodyUploadFileConcertsUploadSongConcertIdPost;
+    path: {
+        /**
+         * Concert Id
+         */
+        concert_id: number;
+    };
+    query?: never;
+    url: '/concerts/upload-song/{concert_id}';
+};
+
+export type UploadFileConcertsUploadSongConcertIdPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type UploadFileConcertsUploadSongConcertIdPostError = UploadFileConcertsUploadSongConcertIdPostErrors[keyof UploadFileConcertsUploadSongConcertIdPostErrors];
+
+export type UploadFileConcertsUploadSongConcertIdPostResponses = {
     /**
      * Successful Response
      */
