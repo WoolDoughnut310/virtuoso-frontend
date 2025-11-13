@@ -25,11 +25,12 @@ export default function Concert({ params }: Route.ComponentProps) {
         setSearchParams({ mode: value ? "edit" : "view" });
     }
 
-    const toggleComponent = <ViewEditToggle isEditing={isEditing} setIsEditing={setIsEditing} />;
-
+    
     const isOwner = true;
-
+    
     useEffect(() => {
+        const toggleComponent = <ViewEditToggle isEditing={isEditing} setIsEditing={setIsEditing} />;
+
         if (isOwner) {
             setAdminControls(toggleComponent);
         } else {
@@ -37,7 +38,7 @@ export default function Concert({ params }: Route.ComponentProps) {
         }
 
         return () => setAdminControls(null);
-    }, [setAdminControls]);
+    }, [setAdminControls, isEditing]);
 
     if (isPending) return <ConcertSkeleton />;
 
