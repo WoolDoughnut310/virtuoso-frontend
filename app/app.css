@@ -9,6 +9,7 @@ body {
     height: 100%;
 }
 
+
 @font-face {
     font-family: "Bodoni Moda";
     font-style: normal;
@@ -198,4 +199,16 @@ body {
     background-repeat: repeat-x;
     background-position: 0 100%;
     background-size: auto 6px;
+}
+
+.rdp-day_button[data-selected-single="true"] {
+    @apply bg-[#C39F45] text-white border-2 border-[#C39F45];
+}
+
+.rdp-day_button[data-selected-single="true"]:hover {
+    @apply bg-[#A88C3E] text-white;
+}
+
+.rdp-day_button[data-selected-single="true"]:focus {
+    @apply bg-[#C39F45];
 }
