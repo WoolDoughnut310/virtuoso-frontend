@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { format, setHours, setMinutes, isBefore, isSameDay, startOfDay } from "date-fns";
+import {
+    format,
+    setHours,
+    setMinutes,
+    isBefore,
+    isSameDay,
+    startOfDay,
+} from "date-fns";
 import { Calendar as CalendarIcon, Clock } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
@@ -93,7 +100,7 @@ export function ConcertDTPicker({
 
     const isPastDate = (date: Date) => {
         return isBefore(startOfDay(date), startOfDay(new Date()));
-    }
+    };
 
     const calendarDate = setMinutes(setHours(date, 0), 0);
 
