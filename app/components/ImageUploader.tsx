@@ -5,6 +5,7 @@ import { uploadConcertImageConcertsUploadImageConcertIdPostMutation } from "~/cl
 import HeroImage from "./HeroImage";
 import { Upload } from "lucide-react";
 import { useId } from "react";
+import { toast } from "sonner";
 
 interface ImageUploaderProps {
     control: Control<ConcertUpdate>;
@@ -29,24 +30,29 @@ export function ImageUploader({ control, concert_id }: ImageUploaderProps) {
                 const handleFileChange = async (
                     event: React.ChangeEvent<HTMLInputElement>
                 ) => {
-                    console.log("handling")
+                    console.log("handling");
                     const file = event.target.files?.[0];
                     if (!file) return;
 
-                    // toast pending
+                    const toastId = toast.loading("Uploading image...");
 
                     try {
                         const result = await uploadImage.mutateAsync({
                             body: { file },
                             path: { concert_id },
                         });
-                        // toast success
+
+                        toast.success("Image uploaded successfully!", {
+                            id: toastId,
+                        });
 
                         field.onChange(result.cover_image_url);
                         event.target.value = "";
                     } catch (e) {
-                        // toast error
-                        console.error("Upload failed", e);
+                        toast.error("Image upload failed. Please try again.", {
+                            id: toastId,
+                        });
+                        console.error("Upload error:", e);
                     }
                 };
 
@@ -83,7 +89,11 @@ export function ImageUploader({ control, concert_id }: ImageUploaderProps) {
                                 *{errors.cover_image_url.message}
                             </p>
                         )}
-                        <input type="hidden" {...field} />
+                        <input
+                            type="hidden"
+                            {...field}
+                            value={field.value ?? ""}
+                        />
                     </div>
                 );
             }}
