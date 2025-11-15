@@ -1,14 +1,17 @@
-import { Link, useLocation } from "react-router";
-import { useLayoutContext } from "./LayoutProvider";
+import { Link, matchPath, useLocation, useParams } from "react-router";
+import SearchBar from "./SearchBar";
+import { useIsOwner } from "~/lib/useIsOwner";
+import ViewEditToggle from "./ViewEditToggle";
 
 export default function Header() {
-    const { adminControls } = useLayoutContext();
     const location = useLocation();
     const currentPath = location.pathname;
+    const params = useParams();
+    const isOwner = useIsOwner(params.concert_id);
     const links = {
-        "/": "Home",
-        "/discover": "Discover",
-        "/account": "Account",
+        Home: "/",
+        Discover: "/discover",
+        Account: "/account",
     };
 
     return (
@@ -17,7 +20,7 @@ export default function Header() {
                 Virtuoso
             </h1>
             <div className="flex flex-row justify-center items-center gap-16 text-2xl font-ibm-plex-sans font-normal text-[#282828]">
-                {Object.entries(links).map(([path, name]) => {
+                {Object.entries(links).map(([name, path]) => {
                     const isActive = currentPath === path;
 
                     return (
@@ -30,8 +33,10 @@ export default function Header() {
                         </Link>
                     );
                 })}
+                {currentPath === links.Discover && <SearchBar />}
             </div>
-            {adminControls}
+
+            {matchPath("/concert/*", currentPath) && isOwner && <ViewEditToggle />}
         </div>
     );
 }
