@@ -253,6 +253,10 @@ export type UserPublic = {
      * Id
      */
     id: number;
+    /**
+     * Artist Id
+     */
+    artist_id: number | null;
 };
 
 /**
@@ -482,6 +486,22 @@ export type DiscoverConcertsConcertsDiscoverGetData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Q
+         */
+        q?: string | null;
+        /**
+         * Artist Id
+         */
+        artist_id?: number | null;
+        /**
+         * Min Price
+         */
+        min_price?: number | null;
+        /**
+         * Max Price
+         */
+        max_price?: number | null;
         /**
          * Limit
          */

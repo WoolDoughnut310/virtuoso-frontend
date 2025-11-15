@@ -69,12 +69,6 @@ export const loginForAccessTokenTokenPost = <ThrowOnError extends boolean = fals
 export const uploadConcertImageConcertsUploadImageConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<UploadConcertImageConcertsUploadImageConcertIdPostData, ThrowOnError>) => {
     return (options.client ?? client).post<UploadConcertImageConcertsUploadImageConcertIdPostResponses, UploadConcertImageConcertsUploadImageConcertIdPostErrors, ThrowOnError>({
         ...formDataBodySerializer,
-        security: [
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
         url: '/concerts/upload-image/{concert_id}',
         ...options,
         headers: {
@@ -198,12 +192,6 @@ export const getConcertConcertsConcertIdGet = <ThrowOnError extends boolean = fa
  */
 export const updateConcertConcertsConcertIdPatch = <ThrowOnError extends boolean = false>(options: Options<UpdateConcertConcertsConcertIdPatchData, ThrowOnError>) => {
     return (options.client ?? client).patch<UpdateConcertConcertsConcertIdPatchResponses, UpdateConcertConcertsConcertIdPatchErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
         url: '/concerts/{concert_id}',
         ...options,
         headers: {
