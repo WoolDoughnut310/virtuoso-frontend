@@ -1,5 +1,10 @@
-export default function ViewEditToggle({isEditing, setIsEditing}: {isEditing: boolean, setIsEditing: (value: boolean) => void}) {
-    const baseClasses = "h-full w-1/2 flex items-center justify-center transition-colors duration-200";
+import { useIsEditing } from "~/lib/useIsEditing";
+
+export default function ViewEditToggle() {
+    const [isEditing, setIsEditing] = useIsEditing();
+
+    const baseClasses =
+        "h-full w-1/2 flex items-center justify-center transition-colors duration-200";
     const inactiveClasses = "bg-transparent text-[#282828]";
 
     return (

@@ -1,11 +1,16 @@
 import type { ConcertPublic } from "~/client";
 import { Banknote, Clock, Users } from "lucide-react";
 import { formatUpcoming } from "~/lib/formatDateTime";
+import HeroImage from "./HeroImage";
+import { Link } from "react-router";
 
 export default function ConcertDisplay({ data }: { data: ConcertPublic }) {
     return (
-        <div className="flex flex-col w-lg ">
-            <div className="rounded-t-3xl bg-red-500 h-72"></div>
+        <Link to={`/concert/${data.id}`} className="flex flex-col w-lg rounded-3xl transition transform duration-200 hover:shadow-lg hover:shadow-black/20 hover:border-[#C39F45]">
+            <HeroImage
+                className="rounded-t-3xl h-72"
+                src={data.cover_image_url}
+            />
             <div className="flex flex-row rounded-b-3xl px-6 py-6 justify-between items-center border-2 border-black">
                 <div className="flex flex-col gap-px">
                     <h3 className="font-ibm-plex-sans font-medium text-[18px]">
@@ -63,6 +68,6 @@ export default function ConcertDisplay({ data }: { data: ConcertPublic }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }

@@ -5,6 +5,7 @@ import ConcertListing from "~/components/ConcertListing";
 
 export default function Discover() {
     const [searchParams, setSearchParams] = useSearchParams();
+    const q = searchParams.get("q") || "";
     const limit = Number(searchParams.get("limit")) || 50;
     const offset = Number(searchParams.get("offset")) || 0;
     const sortBy =
@@ -14,7 +15,7 @@ export default function Discover() {
     const { isPending, isError, error, data, isFetching, isPlaceholderData } =
         useQuery({
             ...discoverConcertsConcertsDiscoverGetOptions({
-                query: { limit, offset, sort_by: sortBy },
+                query: { limit, offset, sort_by: sortBy, q },
             }),
             placeholderData: keepPreviousData,
         });

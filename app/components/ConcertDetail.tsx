@@ -7,22 +7,21 @@ import { useMutation } from "@tanstack/react-query";
 import { updateConcertConcertsConcertIdPatchMutation } from "~/client/@tanstack/react-query.gen";
 import { ImageUploader } from "./ImageUploader";
 import HeroImage from "./HeroImage";
+import { useEffect, useState } from "react";
+import { useIsEditing } from "~/lib/useIsEditing";
 
 export interface ConcertDetailProps {
     concert_id: number;
     data: ConcertPublic;
     isOwner: boolean;
-    isEditing: boolean;
-    setIsEditing: (value: boolean) => void;
 }
 
 export default function ConcertDetail({
     concert_id,
     data,
     isOwner,
-    isEditing,
-    setIsEditing,
 }: ConcertDetailProps) {
+    const [isEditing, setIsEditing] = useIsEditing();
     const {
         register,
         handleSubmit,
@@ -40,6 +39,7 @@ export default function ConcertDetail({
             setIsEditing(false);
         },
     });
+    const [currentTime, setCurrentTime] = useState(Date.now());
 
     const onSubmit: SubmitHandler<ConcertUpdate> = (data) => {
         updateConcert.mutate({
@@ -49,6 +49,19 @@ export default function ConcertDetail({
             },
         });
     };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentTime(Date.now());
+        }, 1000);
+        return () => clearInterval(intervalId);
+    }, []);
+
+    const concertStartTime = new Date(data.start_time).getTime();
+    const concertEndTime = concertStartTime + 3 * 60 * 60 * 1000;
+
+    const isLive =
+        currentTime >= concertStartTime && currentTime < concertEndTime;
 
     const isEditingMode = isOwner && isEditing;
 
@@ -126,7 +139,10 @@ export default function ConcertDetail({
                                     Sold 35 / {data.max_capacity}
                                 </span>
                             )}
-                            <div className="flex flex-row gap-2 items-center">
+                            <div
+                                className="flex flex-row gap-2 items-center"
+                                title={data.start_time}
+                            >
                                 {isEditingMode ? (
                                     <Controller
                                         control={control}
@@ -167,12 +183,36 @@ export default function ConcertDetail({
                         >
                             Save Changes
                         </button>
-                    ) : (
+                    ) : isOwner ? (
+                        // --- OWNER'S BUTTON ---
                         <button
                             type="button"
-                            className={`${baseButtonClass} bg-[#ccac54FF] hover:bg-[#c39f45]`}
+                            className={`${baseButtonClass} ${isLive ? "bg-red-600 hover:bg-red-700" : "bg-[#282828] hover:bg-[#4a4a4a]"}`}
+                            onClick={() => {
+                                // Navigate owner to the stream management or live dashboard
+                                console.log(
+                                    "Navigating to Owner Management/Stream Page..."
+                                );
+                                // navigate(`/concerts/${concert_id}/manage`);
+                            }}
                         >
-                            Buy Access
+                            {isLive ? "MANAGE LIVE STREAM" : "MANAGE CONCERT"}
+                        </button>
+                    ) : (
+                        // --- STANDARD BUYER'S BUTTON ---
+                        <button
+                            type="button"
+                            className={`${baseButtonClass} ${isLive ? "bg-red-600 hover:bg-red-700" : "bg-[#ccac54FF] hover:bg-[#c39f45]"}`}
+                            onClick={() => {
+                                // Handle Listen In or Buy Access action
+                                console.log(
+                                    isLive
+                                        ? "Navigating to live stream!"
+                                        : "Initiating purchase flow..."
+                                );
+                            }}
+                        >
+                            {isLive ? "LISTEN IN" : "Buy Access"}
                         </button>
                     )}
                 </div>
