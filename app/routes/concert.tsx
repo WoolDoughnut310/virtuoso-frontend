@@ -1,44 +1,14 @@
-import { useEffect } from "react";
 import ConcertDetail from "~/components/ConcertDetail";
 import type { Route } from "./+types/concert";
-import { useQuery } from "@tanstack/react-query";
-import { getConcertConcertsConcertIdGetOptions } from "~/client/@tanstack/react-query.gen";
-import { useSearchParams } from "react-router";
 import ConcertSkeleton from "~/components/ConcertSkeleton";
-import { useLayoutContext } from "~/components/LayoutProvider";
-import ViewEditToggle from "~/components/ViewEditToggle";
+import { useConcertQuery } from "~/lib/useConcertData";
+import { useIsOwner } from "~/lib/useIsOwner";
 
 export default function Concert({ params }: Route.ComponentProps) {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const isEditing = searchParams.get("mode") === "edit";
     const concert_id = Number(params.concert_id);
-    var { isPending, isError, data, error } = useQuery({
-        ...getConcertConcertsConcertIdGetOptions({
-            path: {
-                concert_id,
-            },
-        }),
-    });
-    const { setAdminControls } = useLayoutContext();
+    var { isPending, isError, data, error } = useConcertQuery(concert_id);
 
-    const setIsEditing = (value: boolean) => {
-        setSearchParams({ mode: value ? "edit" : "view" });
-    }
-
-    
-    const isOwner = true;
-    
-    useEffect(() => {
-        const toggleComponent = <ViewEditToggle isEditing={isEditing} setIsEditing={setIsEditing} />;
-
-        if (isOwner) {
-            setAdminControls(toggleComponent);
-        } else {
-            setAdminControls(null);
-        }
-
-        return () => setAdminControls(null);
-    }, [setAdminControls, isEditing]);
+    const isOwner = useIsOwner(concert_id);
 
     if (isPending) return <ConcertSkeleton />;
 
@@ -46,12 +16,6 @@ export default function Concert({ params }: Route.ComponentProps) {
         return <div>Error loading concert details: {error?.message}</div>;
 
     return (
-        <ConcertDetail
-            concert_id={concert_id}
-            data={data}
-            isOwner={isOwner}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-        />
+        <ConcertDetail concert_id={concert_id} data={data} isOwner={isOwner} />
     );
 }
