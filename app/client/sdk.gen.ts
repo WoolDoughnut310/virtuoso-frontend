@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostErrors, CreateConcertConcertsCreatePostResponses, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteErrors, DeleteConcertConcertsConcertIdDeleteResponses, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetErrors, DiscoverConcertsConcertsDiscoverGetResponses, GetConcertConcertsConcertIdGetData, GetConcertConcertsConcertIdGetErrors, GetConcertConcertsConcertIdGetResponses, LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostErrors, LoginForAccessTokenTokenPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, StartConcertConcertsStartConcertIdPostData, StartConcertConcertsStartConcertIdPostErrors, StartConcertConcertsStartConcertIdPostResponses, StopConcertConcertsStopConcertIdPostData, StopConcertConcertsStopConcertIdPostErrors, StopConcertConcertsStopConcertIdPostResponses, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchErrors, UpdateConcertConcertsConcertIdPatchResponses, UploadConcertImageConcertsUploadImageConcertIdPostData, UploadConcertImageConcertsUploadImageConcertIdPostErrors, UploadConcertImageConcertsUploadImageConcertIdPostResponses, UploadFileConcertsUploadSongConcertIdPostData, UploadFileConcertsUploadSongConcertIdPostErrors, UploadFileConcertsUploadSongConcertIdPostResponses } from './types.gen';
+import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostErrors, CreateConcertConcertsCreatePostResponses, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteErrors, DeleteConcertConcertsConcertIdDeleteResponses, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetErrors, DiscoverConcertsConcertsDiscoverGetResponses, GetConcertConcertsConcertIdGetData, GetConcertConcertsConcertIdGetErrors, GetConcertConcertsConcertIdGetResponses, LoginUserTokenPostData, LoginUserTokenPostErrors, LoginUserTokenPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetErrors, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchErrors, UpdateConcertConcertsConcertIdPatchResponses, UploadConcertImageConcertsUploadImageConcertIdPostData, UploadConcertImageConcertsUploadImageConcertIdPostErrors, UploadConcertImageConcertsUploadImageConcertIdPostResponses, UploadSongConcertsUploadSongConcertIdPostData, UploadSongConcertsUploadSongConcertIdPostErrors, UploadSongConcertsUploadSongConcertIdPostResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -22,15 +22,24 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
  * Read Users Me
  */
 export const readUsersMeMeGet = <ThrowOnError extends boolean = false>(options?: Options<ReadUsersMeMeGetData, ThrowOnError>) => {
-    return (options?.client ?? client).get<ReadUsersMeMeGetResponses, unknown, ThrowOnError>({
-        security: [
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
+    return (options?.client ?? client).get<ReadUsersMeMeGetResponses, ReadUsersMeMeGetErrors, ThrowOnError>({
         url: '/me',
         ...options
+    });
+};
+
+/**
+ * Login User
+ */
+export const loginUserTokenPost = <ThrowOnError extends boolean = false>(options: Options<LoginUserTokenPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<LoginUserTokenPostResponses, LoginUserTokenPostErrors, ThrowOnError>({
+        ...urlSearchParamsBodySerializer,
+        url: '/token',
+        ...options,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            ...options.headers
+        }
     });
 };
 
@@ -43,21 +52,6 @@ export const registerUserRegisterPost = <ThrowOnError extends boolean = false>(o
         ...options,
         headers: {
             'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
-
-/**
- * Login For Access Token
- */
-export const loginForAccessTokenTokenPost = <ThrowOnError extends boolean = false>(options: Options<LoginForAccessTokenTokenPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<LoginForAccessTokenTokenPostResponses, LoginForAccessTokenTokenPostErrors, ThrowOnError>({
-        ...urlSearchParamsBodySerializer,
-        url: '/token',
-        ...options,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
             ...options.headers
         }
     });
@@ -79,17 +73,11 @@ export const uploadConcertImageConcertsUploadImageConcertIdPost = <ThrowOnError 
 };
 
 /**
- * Upload File
+ * Upload Song
  */
-export const uploadFileConcertsUploadSongConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<UploadFileConcertsUploadSongConcertIdPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<UploadFileConcertsUploadSongConcertIdPostResponses, UploadFileConcertsUploadSongConcertIdPostErrors, ThrowOnError>({
+export const uploadSongConcertsUploadSongConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<UploadSongConcertsUploadSongConcertIdPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<UploadSongConcertsUploadSongConcertIdPostResponses, UploadSongConcertsUploadSongConcertIdPostErrors, ThrowOnError>({
         ...formDataBodySerializer,
-        security: [
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
         url: '/concerts/upload-song/{concert_id}',
         ...options,
         headers: {
@@ -100,54 +88,12 @@ export const uploadFileConcertsUploadSongConcertIdPost = <ThrowOnError extends b
 };
 
 /**
- * Start Concert
- */
-export const startConcertConcertsStartConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<StartConcertConcertsStartConcertIdPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<StartConcertConcertsStartConcertIdPostResponses, StartConcertConcertsStartConcertIdPostErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/concerts/start/{concert_id}',
-        ...options
-    });
-};
-
-/**
- * Stop Concert
- */
-export const stopConcertConcertsStopConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<StopConcertConcertsStopConcertIdPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<StopConcertConcertsStopConcertIdPostResponses, StopConcertConcertsStopConcertIdPostErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
-        url: '/concerts/stop/{concert_id}',
-        ...options
-    });
-};
-
-/**
  * Create Concert
  */
-export const createConcertConcertsCreatePost = <ThrowOnError extends boolean = false>(options: Options<CreateConcertConcertsCreatePostData, ThrowOnError>) => {
-    return (options.client ?? client).post<CreateConcertConcertsCreatePostResponses, CreateConcertConcertsCreatePostErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
+export const createConcertConcertsCreatePost = <ThrowOnError extends boolean = false>(options?: Options<CreateConcertConcertsCreatePostData, ThrowOnError>) => {
+    return (options?.client ?? client).post<CreateConcertConcertsCreatePostResponses, CreateConcertConcertsCreatePostErrors, ThrowOnError>({
         url: '/concerts/create',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
+        ...options
     });
 };
 
@@ -166,12 +112,6 @@ export const discoverConcertsConcertsDiscoverGet = <ThrowOnError extends boolean
  */
 export const deleteConcertConcertsConcertIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteConcertConcertsConcertIdDeleteData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteConcertConcertsConcertIdDeleteResponses, DeleteConcertConcertsConcertIdDeleteErrors, ThrowOnError>({
-        security: [
-            {
-                scheme: 'bearer',
-                type: 'http'
-            }
-        ],
         url: '/concerts/{concert_id}',
         ...options
     });

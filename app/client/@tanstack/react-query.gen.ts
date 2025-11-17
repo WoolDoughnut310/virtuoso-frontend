@@ -3,8 +3,8 @@
 import { type InfiniteData, infiniteQueryOptions, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { createConcertConcertsCreatePost, deleteConcertConcertsConcertIdDelete, discoverConcertsConcertsDiscoverGet, getConcertConcertsConcertIdGet, loginForAccessTokenTokenPost, type Options, readUsersMeMeGet, registerUserRegisterPost, startConcertConcertsStartConcertIdPost, stopConcertConcertsStopConcertIdPost, updateConcertConcertsConcertIdPatch, uploadConcertImageConcertsUploadImageConcertIdPost, uploadFileConcertsUploadSongConcertIdPost } from '../sdk.gen';
-import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostError, CreateConcertConcertsCreatePostResponse, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteError, DeleteConcertConcertsConcertIdDeleteResponse, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetError, DiscoverConcertsConcertsDiscoverGetResponse, GetConcertConcertsConcertIdGetData, LoginForAccessTokenTokenPostData, LoginForAccessTokenTokenPostError, LoginForAccessTokenTokenPostResponse, ReadUsersMeMeGetData, RegisterUserRegisterPostData, RegisterUserRegisterPostError, RegisterUserRegisterPostResponse, StartConcertConcertsStartConcertIdPostData, StartConcertConcertsStartConcertIdPostError, StopConcertConcertsStopConcertIdPostData, StopConcertConcertsStopConcertIdPostError, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchError, UpdateConcertConcertsConcertIdPatchResponse, UploadConcertImageConcertsUploadImageConcertIdPostData, UploadConcertImageConcertsUploadImageConcertIdPostError, UploadConcertImageConcertsUploadImageConcertIdPostResponse, UploadFileConcertsUploadSongConcertIdPostData, UploadFileConcertsUploadSongConcertIdPostError } from '../types.gen';
+import { createConcertConcertsCreatePost, deleteConcertConcertsConcertIdDelete, discoverConcertsConcertsDiscoverGet, getConcertConcertsConcertIdGet, loginUserTokenPost, type Options, readUsersMeMeGet, registerUserRegisterPost, updateConcertConcertsConcertIdPatch, uploadConcertImageConcertsUploadImageConcertIdPost, uploadSongConcertsUploadSongConcertIdPost } from '../sdk.gen';
+import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostError, CreateConcertConcertsCreatePostResponse, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteError, DeleteConcertConcertsConcertIdDeleteResponse, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetError, DiscoverConcertsConcertsDiscoverGetResponse, GetConcertConcertsConcertIdGetData, LoginUserTokenPostData, LoginUserTokenPostError, ReadUsersMeMeGetData, RegisterUserRegisterPostData, RegisterUserRegisterPostError, RegisterUserRegisterPostResponse, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchError, UpdateConcertConcertsConcertIdPatchResponse, UploadConcertImageConcertsUploadImageConcertIdPostData, UploadConcertImageConcertsUploadImageConcertIdPostError, UploadConcertImageConcertsUploadImageConcertIdPostResponse, UploadSongConcertsUploadSongConcertIdPostData, UploadSongConcertsUploadSongConcertIdPostError } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -62,12 +62,12 @@ export const readUsersMeMeGetOptions = (options?: Options<ReadUsersMeMeGetData>)
 };
 
 /**
- * Register User
+ * Login User
  */
-export const registerUserRegisterPostMutation = (options?: Partial<Options<RegisterUserRegisterPostData>>): UseMutationOptions<RegisterUserRegisterPostResponse, RegisterUserRegisterPostError, Options<RegisterUserRegisterPostData>> => {
-    const mutationOptions: UseMutationOptions<RegisterUserRegisterPostResponse, RegisterUserRegisterPostError, Options<RegisterUserRegisterPostData>> = {
+export const loginUserTokenPostMutation = (options?: Partial<Options<LoginUserTokenPostData>>): UseMutationOptions<unknown, LoginUserTokenPostError, Options<LoginUserTokenPostData>> => {
+    const mutationOptions: UseMutationOptions<unknown, LoginUserTokenPostError, Options<LoginUserTokenPostData>> = {
         mutationFn: async (fnOptions) => {
-            const { data } = await registerUserRegisterPost({
+            const { data } = await loginUserTokenPost({
                 ...options,
                 ...fnOptions,
                 throwOnError: true
@@ -79,12 +79,12 @@ export const registerUserRegisterPostMutation = (options?: Partial<Options<Regis
 };
 
 /**
- * Login For Access Token
+ * Register User
  */
-export const loginForAccessTokenTokenPostMutation = (options?: Partial<Options<LoginForAccessTokenTokenPostData>>): UseMutationOptions<LoginForAccessTokenTokenPostResponse, LoginForAccessTokenTokenPostError, Options<LoginForAccessTokenTokenPostData>> => {
-    const mutationOptions: UseMutationOptions<LoginForAccessTokenTokenPostResponse, LoginForAccessTokenTokenPostError, Options<LoginForAccessTokenTokenPostData>> = {
+export const registerUserRegisterPostMutation = (options?: Partial<Options<RegisterUserRegisterPostData>>): UseMutationOptions<RegisterUserRegisterPostResponse, RegisterUserRegisterPostError, Options<RegisterUserRegisterPostData>> => {
+    const mutationOptions: UseMutationOptions<RegisterUserRegisterPostResponse, RegisterUserRegisterPostError, Options<RegisterUserRegisterPostData>> = {
         mutationFn: async (fnOptions) => {
-            const { data } = await loginForAccessTokenTokenPost({
+            const { data } = await registerUserRegisterPost({
                 ...options,
                 ...fnOptions,
                 throwOnError: true
@@ -113,46 +113,12 @@ export const uploadConcertImageConcertsUploadImageConcertIdPostMutation = (optio
 };
 
 /**
- * Upload File
+ * Upload Song
  */
-export const uploadFileConcertsUploadSongConcertIdPostMutation = (options?: Partial<Options<UploadFileConcertsUploadSongConcertIdPostData>>): UseMutationOptions<unknown, UploadFileConcertsUploadSongConcertIdPostError, Options<UploadFileConcertsUploadSongConcertIdPostData>> => {
-    const mutationOptions: UseMutationOptions<unknown, UploadFileConcertsUploadSongConcertIdPostError, Options<UploadFileConcertsUploadSongConcertIdPostData>> = {
+export const uploadSongConcertsUploadSongConcertIdPostMutation = (options?: Partial<Options<UploadSongConcertsUploadSongConcertIdPostData>>): UseMutationOptions<unknown, UploadSongConcertsUploadSongConcertIdPostError, Options<UploadSongConcertsUploadSongConcertIdPostData>> => {
+    const mutationOptions: UseMutationOptions<unknown, UploadSongConcertsUploadSongConcertIdPostError, Options<UploadSongConcertsUploadSongConcertIdPostData>> = {
         mutationFn: async (fnOptions) => {
-            const { data } = await uploadFileConcertsUploadSongConcertIdPost({
-                ...options,
-                ...fnOptions,
-                throwOnError: true
-            });
-            return data;
-        }
-    };
-    return mutationOptions;
-};
-
-/**
- * Start Concert
- */
-export const startConcertConcertsStartConcertIdPostMutation = (options?: Partial<Options<StartConcertConcertsStartConcertIdPostData>>): UseMutationOptions<unknown, StartConcertConcertsStartConcertIdPostError, Options<StartConcertConcertsStartConcertIdPostData>> => {
-    const mutationOptions: UseMutationOptions<unknown, StartConcertConcertsStartConcertIdPostError, Options<StartConcertConcertsStartConcertIdPostData>> = {
-        mutationFn: async (fnOptions) => {
-            const { data } = await startConcertConcertsStartConcertIdPost({
-                ...options,
-                ...fnOptions,
-                throwOnError: true
-            });
-            return data;
-        }
-    };
-    return mutationOptions;
-};
-
-/**
- * Stop Concert
- */
-export const stopConcertConcertsStopConcertIdPostMutation = (options?: Partial<Options<StopConcertConcertsStopConcertIdPostData>>): UseMutationOptions<unknown, StopConcertConcertsStopConcertIdPostError, Options<StopConcertConcertsStopConcertIdPostData>> => {
-    const mutationOptions: UseMutationOptions<unknown, StopConcertConcertsStopConcertIdPostError, Options<StopConcertConcertsStopConcertIdPostData>> = {
-        mutationFn: async (fnOptions) => {
-            const { data } = await stopConcertConcertsStopConcertIdPost({
+            const { data } = await uploadSongConcertsUploadSongConcertIdPost({
                 ...options,
                 ...fnOptions,
                 throwOnError: true
