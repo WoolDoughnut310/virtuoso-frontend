@@ -4,6 +4,7 @@ import type { UserCreate } from "~/client";
 import { registerUserRegisterPostMutation } from "~/client/@tanstack/react-query.gen";
 import { useMutation } from "@tanstack/react-query";
 import CTAButton from "./CTAButton";
+import { useNavigate } from "react-router";
 
 interface SignupForm extends UserCreate {
     confirm_password: string;
@@ -16,6 +17,7 @@ export default function Register() {
         formState: { errors },
         setError,
     } = useForm<SignupForm>();
+    const navigate = useNavigate();
     const registerUser = useMutation({
         ...registerUserRegisterPostMutation(),
     });
@@ -27,6 +29,10 @@ export default function Register() {
         }
         registerUser.mutate({
             body: data,
+        }, {
+            onSuccess: () => {
+                navigate("/login")
+            }
         });
     };
 
