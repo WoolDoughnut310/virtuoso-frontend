@@ -19,6 +19,7 @@ const queryClient = new QueryClient();
 
 client.setConfig({
     baseUrl: "http://localhost:8000",
+    credentials: "include"
 });
 
 export function Layout({ children }: { children: React.ReactNode }) {
