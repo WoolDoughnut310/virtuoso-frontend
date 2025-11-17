@@ -1,4 +1,4 @@
-import { useConcertQuery } from "~/lib/useConcertData";
+import { useConcertData } from "~/lib/useConcertData";
 import type { Route } from "./+types/live";
 import HeroImage from "~/components/HeroImage";
 import { Volume1, Volume2, VolumeX } from "lucide-react";
@@ -21,7 +21,7 @@ const EMOJIS: string[] = ["❤️", "😂", "🔥", "🎉", "👏", "😎"];
 
 export default function Live({ params }: Route.ComponentProps) {
     const concert_id = Number(params.concert_id);
-    var { isPending, isError, data, error } = useConcertQuery(concert_id);
+    var { isPending, isError, data, error } = useConcertData(concert_id);
     const [volume, setVolume] = useState(75);
     const [isMuted, setIsMuted] = useState(false);
     const [emojis, setEmojis] = useState<FloatingEmoji[]>([]);
@@ -266,7 +266,7 @@ export default function Live({ params }: Route.ComponentProps) {
                             {isPending ? (
                                 <Skeleton className="h-6 w-16" />
                             ) : (
-                                <ElapsedTime startTimeISO={data!.start_time} />
+                                <ElapsedTime startTimeISO={data!.start_time!} />
                             )}
 
                             <div className="flex items-center space-x-4">

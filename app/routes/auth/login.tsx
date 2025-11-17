@@ -1,7 +1,7 @@
 import InputField from "~/components/InputField";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import type { BodyLoginForAccessTokenTokenPost } from "~/client";
-import { loginForAccessTokenTokenPostMutation } from "~/client/@tanstack/react-query.gen";
+import type { BodyLoginUserTokenPost } from "~/client";
+import { loginUserTokenPostMutation } from "~/client/@tanstack/react-query.gen";
 import { useMutation } from "@tanstack/react-query";
 import CTAButton from "./CTAButton";
 import { useNavigate } from "react-router";
@@ -12,12 +12,12 @@ export default function Login() {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<BodyLoginForAccessTokenTokenPost>();
+    } = useForm<BodyLoginUserTokenPost>();
     const logIn = useMutation({
-        ...loginForAccessTokenTokenPostMutation(),
+        ...loginUserTokenPostMutation(),
     });
 
-    const onSubmit: SubmitHandler<BodyLoginForAccessTokenTokenPost> = (
+    const onSubmit: SubmitHandler<BodyLoginUserTokenPost> = (
         data
     ) => {
         logIn.mutate(

@@ -24,7 +24,7 @@ export default function ConcertDisplay({ data }: { data: ConcertPublic }) {
                     <div className="flex flex-row items-center gap-2 justify-start">
                         <Clock size={16} />
                         <span className="text-md font-source-sans-pro font-light">
-                            {formatUpcoming(data.start_time)}
+                            {formatUpcoming(data.start_time!)}
                         </span>
                     </div>
                     <div className="flex flex-row items-center gap-2 justify-start">

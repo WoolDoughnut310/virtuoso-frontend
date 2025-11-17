@@ -57,7 +57,7 @@ export default function ConcertDetail({
         return () => clearInterval(intervalId);
     }, []);
 
-    const concertStartTime = new Date(data.start_time).getTime();
+    const concertStartTime = new Date(data.start_time!).getTime();
     const concertEndTime = concertStartTime + 3 * 60 * 60 * 1000;
 
     const isLive =
@@ -169,7 +169,7 @@ export default function ConcertDetail({
                                 ) : (
                                     <>
                                         <Calendar size={24} />
-                                        {formatUpcoming(data.start_time)}
+                                        {formatUpcoming(data.start_time!)}
                                     </>
                                 )}
                             </div>
