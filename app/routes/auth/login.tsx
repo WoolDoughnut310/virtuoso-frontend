@@ -4,8 +4,10 @@ import type { BodyLoginForAccessTokenTokenPost } from "~/client";
 import { loginForAccessTokenTokenPostMutation } from "~/client/@tanstack/react-query.gen";
 import { useMutation } from "@tanstack/react-query";
 import CTAButton from "./CTAButton";
+import { useNavigate } from "react-router";
 
 export default function Login() {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -18,9 +20,16 @@ export default function Login() {
     const onSubmit: SubmitHandler<BodyLoginForAccessTokenTokenPost> = (
         data
     ) => {
-        logIn.mutate({
-            body: data,
-        });
+        logIn.mutate(
+            {
+                body: data,
+            },
+            {
+                onSuccess: () => {
+                    navigate("/");
+                },
+            }
+        );
     };
 
     return (
