@@ -1,13 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { getConcertConcertsConcertIdGetOptions } from "~/client/@tanstack/react-query.gen";
+import { concertDataQuery } from "./queries";
 
-export function useConcertData(concert_id?: number | string) {
-    return useQuery({
-        ...getConcertConcertsConcertIdGetOptions({
-            path: {
-                concert_id: Number(concert_id),
-            },
-        }),
-        enabled: !!concert_id
-    });
+export function useConcertData(concert_id: number | string) {
+    return useQuery({ ...concertDataQuery(concert_id), throwOnError: true })
+        .data!;
+}
+
+export function useOptionalConcertData(concert_id?: number | string) {
+    return useQuery(concertDataQuery(concert_id)).data;
 }

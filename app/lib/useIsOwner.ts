@@ -1,9 +1,9 @@
-import { useAuth } from "./AuthContext";
-import { useConcertData } from "./useConcertData";
+import { useOptionalConcertData } from "./useConcertData";
+import { useOptionalCurrentUser } from "./useCurrentUser";
 
 export function useIsOwner(concert_id?: number | string) {
-    var { data } = useConcertData(concert_id);
-    const { user, isAuthenticated } = useAuth();
+    const concert = useOptionalConcertData(concert_id);
+    const user = useOptionalCurrentUser();
 
-    return isAuthenticated && user?.artist_id === data?.artist.id;
+    return user && user.artist_id == concert?.artist.id;
 }
