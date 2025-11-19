@@ -3,10 +3,12 @@ import type { Route } from "./+types/live";
 import HeroImage from "~/components/HeroImage";
 import { Volume1, Volume2, VolumeX } from "lucide-react";
 import { ElapsedTime } from "~/components/ElapsedTime";
-import { Skeleton } from "~/components/ui/skeleton";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import useWebRTCAudio from "~/lib/useWebRTCAudio";
+import { memberOnlyLoader } from "~/lib/loaders";
+import { concertDataQuery } from "~/lib/queries";
+import queryClient from "~/lib/queryClient";
 
 export interface FloatingEmoji {
     id: number;
@@ -19,9 +21,14 @@ export interface FloatingEmoji {
 
 const EMOJIS: string[] = ["❤️", "😂", "🔥", "🎉", "👏", "😎"];
 
+export const clientLoader = async ({ params }: Route.ClientLoaderArgs) => {
+    await memberOnlyLoader();
+    await queryClient.ensureQueryData(concertDataQuery(params.concert_id));
+};
+
 export default function Live({ params }: Route.ComponentProps) {
-    const concert_id = Number(params.concert_id);
-    var { isPending, isError, data, error } = useConcertData(concert_id);
+    const concert_id = Number(params.concert_id)!;
+    var data = useConcertData(concert_id);
     const [volume, setVolume] = useState(75);
     const [isMuted, setIsMuted] = useState(false);
     const [emojis, setEmojis] = useState<FloatingEmoji[]>([]);
@@ -33,12 +40,8 @@ export default function Live({ params }: Route.ComponentProps) {
         latestReaction,
         clearLatestReaction,
         resumeAudio,
-        audioLevels
+        audioLevels,
     } = useWebRTCAudio(audioRef, concert_id);
-
-    const isLoading = isPending || streamStatus === "connecting";
-    const isPlaying = streamStatus === "connected";
-    let hasError = (isError && error) || streamStatus === "error";
 
     useEffect(() => {
         const audioEl = audioRef.current;
@@ -112,9 +115,9 @@ export default function Live({ params }: Route.ComponentProps) {
 
     return (
         <>
-            Status: {streamStatus}
+        <title>🔴 LIVE: {data.name} - Virtuoso</title>
             <audio ref={audioRef} style={{ display: "none" }} />
-            {hasError ? (
+            {streamStatus === "error" ? (
                 isAutoplayBlocked ? (
                     <div className="flex flex-col items-center justify-center w-full h-screen bg-black/90 text-white">
                         <p className="mb-4 text-lg">
@@ -132,16 +135,14 @@ export default function Live({ params }: Route.ComponentProps) {
                 ) : (
                     <div className="p-10 text-white bg-red-800">
                         Error loading stream:{" "}
-                        {error?.message ||
-                            streamError ||
-                            "Unknown connection error."}
+                        {streamError || "Unknown connection error."}
                     </div>
                 )
             ) : (
                 <div className="relative w-full h-full overflow-hidden">
                     <HeroImage
-                        src={isPending ? undefined : data?.cover_image_url}
-                        className={`object-cover w-full h-full ${isPending ? "bg-gray-900/70" : ""}`}
+                        src={data.cover_image_url}
+                        className="object-cover w-full h-full"
                         alt="Live Concert Background"
                     />
                     <div className="absolute inset-0 bg-black/50 p-10 flex flex-col justify-between">
@@ -194,34 +195,22 @@ export default function Live({ params }: Route.ComponentProps) {
                                     LIVE NOW
                                 </span>
 
-                                {isPending ? (
-                                    <Skeleton className="h-6 w-28" />
-                                ) : (
-                                    <span className="text-white/80 text-sm font-ibm-plex-sans tracking-wider">
-                                        1,850 LISTENING
-                                    </span>
-                                )}
+                                <span className="text-white/80 text-sm font-ibm-plex-sans tracking-wider">
+                                    1,850 LISTENING
+                                </span>
                             </div>
 
-                            {isPending ? (
-                                <Skeleton className="h-12 w-64 mt-2" />
-                            ) : (
-                                <h1 className="text-6xl font-playfair-display text-white">
-                                    {data?.artist.name}
-                                </h1>
-                            )}
+                            <h1 className="text-6xl font-playfair-display text-white">
+                                {data.artist.name}
+                            </h1>
 
-                            {isPending ? (
-                                <Skeleton className="h-8 w-48 mt-6" />
-                            ) : (
-                                <h2 className="text-3xl font-ibm-plex-sans text-gray-300 mt-2">
-                                    {data?.name}
-                                </h2>
-                            )}
+                            <h2 className="text-3xl font-ibm-plex-sans text-gray-300 mt-2">
+                                {data.name}
+                            </h2>
                         </div>
 
                         <div className="h-10 flex justify-center items-end space-x-1">
-                            {isLoading
+                            {streamStatus === "connecting"
                                 ? [...Array(5)].map((_, index) => (
                                       <div
                                           key={index}
@@ -263,11 +252,7 @@ export default function Live({ params }: Route.ComponentProps) {
                         </div>
 
                         <div className="flex justify-between items-center bg-black/70 p-4 rounded-lg">
-                            {isPending ? (
-                                <Skeleton className="h-6 w-16" />
-                            ) : (
-                                <ElapsedTime startTimeISO={data!.start_time!} />
-                            )}
+                            <ElapsedTime startTimeISO={data.start_time!} />
 
                             <div className="flex items-center space-x-4">
                                 <button
