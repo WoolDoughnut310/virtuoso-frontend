@@ -5,6 +5,9 @@ import { loginUserTokenPostMutation } from "~/client/@tanstack/react-query.gen";
 import { useMutation } from "@tanstack/react-query";
 import CTAButton from "./CTAButton";
 import { useNavigate } from "react-router";
+import { guestOnlyLoader } from "~/lib/loaders";
+
+export const clientLoader = guestOnlyLoader;
 
 export default function Login() {
     const navigate = useNavigate();
@@ -15,25 +18,20 @@ export default function Login() {
     } = useForm<BodyLoginUserTokenPost>();
     const logIn = useMutation({
         ...loginUserTokenPostMutation(),
+        onSuccess: () => {
+            navigate("/");
+        },
     });
 
-    const onSubmit: SubmitHandler<BodyLoginUserTokenPost> = (
-        data
-    ) => {
-        logIn.mutate(
-            {
-                body: data,
-            },
-            {
-                onSuccess: () => {
-                    navigate("/");
-                },
-            }
-        );
+    const onSubmit: SubmitHandler<BodyLoginUserTokenPost> = (data) => {
+        logIn.mutate({
+            body: data,
+        });
     };
 
     return (
         <div className="flex flex-row gap-4 justify-around grow">
+            <title>Log In to Virtuoso</title>
             <div className="flex flex-col justify-start py-20">
                 <h2 className="font-playfair-display text-7xl font-medium px-12">
                     Enter

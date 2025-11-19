@@ -5,10 +5,13 @@ import { registerUserRegisterPostMutation } from "~/client/@tanstack/react-query
 import { useMutation } from "@tanstack/react-query";
 import CTAButton from "./CTAButton";
 import { useNavigate } from "react-router";
+import { guestOnlyLoader } from "~/lib/loaders";
 
 interface SignupForm extends UserCreate {
     confirm_password: string;
 }
+
+export const clientLoader = guestOnlyLoader;
 
 export default function Register() {
     const {
@@ -20,6 +23,9 @@ export default function Register() {
     const navigate = useNavigate();
     const registerUser = useMutation({
         ...registerUserRegisterPostMutation(),
+        onSuccess: () => {
+            navigate("/login");
+        },
     });
 
     const onSubmit: SubmitHandler<SignupForm> = (data) => {
@@ -29,18 +35,17 @@ export default function Register() {
         }
         registerUser.mutate({
             body: data,
-        }, {
-            onSuccess: () => {
-                navigate("/login")
-            }
         });
     };
 
     return (
         <div className="flex flex-row gap-4 justify-around grow">
+            <title>Sign Up for Virtuoso</title>
             <div className="flex flex-col justify-start py-20">
                 <h2 className="font-playfair-display text-7xl font-medium leading-tight">
-                    Join the<br />Experience
+                    Join the
+                    <br />
+                    Experience
                 </h2>
             </div>
             <div className="flex flex-col justify-start items-center gap-6 py-24">
