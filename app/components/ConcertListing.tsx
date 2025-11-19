@@ -4,9 +4,20 @@ import { formatUpcoming } from "~/lib/formatDateTime";
 import HeroImage from "./HeroImage";
 import { Link } from "react-router";
 
-export default function ConcertDisplay({ data }: { data: ConcertPublic }) {
+interface ConcertDisplayProps {
+    data: ConcertPublic;
+    toEdit?: boolean;
+}
+
+export default function ConcertDisplay({ data, toEdit }: ConcertDisplayProps) {
     return (
-        <Link to={`/concert/${data.id}`} className="flex flex-col w-lg rounded-3xl transition transform duration-200 hover:shadow-lg hover:shadow-black/20 hover:border-[#C39F45]">
+        <Link
+            to={{
+                pathname: `/concert/${data.id}`,
+                search: `?mode=${toEdit ? "edit" : "view"}`,
+            }}
+            className="flex flex-col w-lg rounded-3xl transition transform duration-200 hover:shadow-lg hover:shadow-black/20 hover:border-[#C39F45]"
+        >
             <HeroImage
                 className="rounded-t-3xl h-72"
                 src={data.cover_image_url}
