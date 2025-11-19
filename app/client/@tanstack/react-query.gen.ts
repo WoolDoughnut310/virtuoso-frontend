@@ -3,8 +3,8 @@
 import { type InfiniteData, infiniteQueryOptions, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { createConcertConcertsCreatePost, deleteConcertConcertsConcertIdDelete, discoverConcertsConcertsDiscoverGet, getConcertConcertsConcertIdGet, loginUserTokenPost, type Options, readUsersMeMeGet, registerUserRegisterPost, updateConcertConcertsConcertIdPatch, uploadConcertImageConcertsUploadImageConcertIdPost, uploadSongConcertsUploadSongConcertIdPost } from '../sdk.gen';
-import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostError, CreateConcertConcertsCreatePostResponse, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteError, DeleteConcertConcertsConcertIdDeleteResponse, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetError, DiscoverConcertsConcertsDiscoverGetResponse, GetConcertConcertsConcertIdGetData, LoginUserTokenPostData, LoginUserTokenPostError, ReadUsersMeMeGetData, RegisterUserRegisterPostData, RegisterUserRegisterPostError, RegisterUserRegisterPostResponse, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchError, UpdateConcertConcertsConcertIdPatchResponse, UploadConcertImageConcertsUploadImageConcertIdPostData, UploadConcertImageConcertsUploadImageConcertIdPostError, UploadConcertImageConcertsUploadImageConcertIdPostResponse, UploadSongConcertsUploadSongConcertIdPostData, UploadSongConcertsUploadSongConcertIdPostError } from '../types.gen';
+import { createConcertConcertsCreatePost, createSetlistItemConcertsConcertIdSetlistPost, deleteConcertConcertsConcertIdDelete, deleteMediaArtistsMediaAssetIdDelete, deleteSetlistItemConcertsConcertIdSetlistItemIdDelete, discoverConcertsConcertsDiscoverGet, getConcertConcertsConcertIdGet, listMediaArtistsMediaGet, loginUserTokenPost, type Options, readUsersMeMeGet, registerUserRegisterPost, updateConcertConcertsConcertIdPatch, uploadConcertImageConcertsConcertIdImagePost, uploadMediaArtistsMediaPost } from '../sdk.gen';
+import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostError, CreateConcertConcertsCreatePostResponse, CreateSetlistItemConcertsConcertIdSetlistPostData, CreateSetlistItemConcertsConcertIdSetlistPostError, CreateSetlistItemConcertsConcertIdSetlistPostResponse, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteError, DeleteConcertConcertsConcertIdDeleteResponse, DeleteMediaArtistsMediaAssetIdDeleteData, DeleteMediaArtistsMediaAssetIdDeleteError, DeleteMediaArtistsMediaAssetIdDeleteResponse, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteData, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteError, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteResponse, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetError, DiscoverConcertsConcertsDiscoverGetResponse, GetConcertConcertsConcertIdGetData, ListMediaArtistsMediaGetData, ListMediaArtistsMediaGetError, ListMediaArtistsMediaGetResponse, LoginUserTokenPostData, LoginUserTokenPostError, ReadUsersMeMeGetData, RegisterUserRegisterPostData, RegisterUserRegisterPostError, RegisterUserRegisterPostResponse, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchError, UpdateConcertConcertsConcertIdPatchResponse, UploadConcertImageConcertsConcertIdImagePostData, UploadConcertImageConcertsConcertIdImagePostError, UploadConcertImageConcertsConcertIdImagePostResponse, UploadMediaArtistsMediaPostData, UploadMediaArtistsMediaPostError, UploadMediaArtistsMediaPostResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -98,27 +98,10 @@ export const registerUserRegisterPostMutation = (options?: Partial<Options<Regis
 /**
  * Upload Concert Image
  */
-export const uploadConcertImageConcertsUploadImageConcertIdPostMutation = (options?: Partial<Options<UploadConcertImageConcertsUploadImageConcertIdPostData>>): UseMutationOptions<UploadConcertImageConcertsUploadImageConcertIdPostResponse, UploadConcertImageConcertsUploadImageConcertIdPostError, Options<UploadConcertImageConcertsUploadImageConcertIdPostData>> => {
-    const mutationOptions: UseMutationOptions<UploadConcertImageConcertsUploadImageConcertIdPostResponse, UploadConcertImageConcertsUploadImageConcertIdPostError, Options<UploadConcertImageConcertsUploadImageConcertIdPostData>> = {
+export const uploadConcertImageConcertsConcertIdImagePostMutation = (options?: Partial<Options<UploadConcertImageConcertsConcertIdImagePostData>>): UseMutationOptions<UploadConcertImageConcertsConcertIdImagePostResponse, UploadConcertImageConcertsConcertIdImagePostError, Options<UploadConcertImageConcertsConcertIdImagePostData>> => {
+    const mutationOptions: UseMutationOptions<UploadConcertImageConcertsConcertIdImagePostResponse, UploadConcertImageConcertsConcertIdImagePostError, Options<UploadConcertImageConcertsConcertIdImagePostData>> = {
         mutationFn: async (fnOptions) => {
-            const { data } = await uploadConcertImageConcertsUploadImageConcertIdPost({
-                ...options,
-                ...fnOptions,
-                throwOnError: true
-            });
-            return data;
-        }
-    };
-    return mutationOptions;
-};
-
-/**
- * Upload Song
- */
-export const uploadSongConcertsUploadSongConcertIdPostMutation = (options?: Partial<Options<UploadSongConcertsUploadSongConcertIdPostData>>): UseMutationOptions<unknown, UploadSongConcertsUploadSongConcertIdPostError, Options<UploadSongConcertsUploadSongConcertIdPostData>> => {
-    const mutationOptions: UseMutationOptions<unknown, UploadSongConcertsUploadSongConcertIdPostError, Options<UploadSongConcertsUploadSongConcertIdPostData>> = {
-        mutationFn: async (fnOptions) => {
-            const { data } = await uploadSongConcertsUploadSongConcertIdPost({
+            const { data } = await uploadConcertImageConcertsConcertIdImagePost({
                 ...options,
                 ...fnOptions,
                 throwOnError: true
@@ -270,6 +253,123 @@ export const updateConcertConcertsConcertIdPatchMutation = (options?: Partial<Op
     const mutationOptions: UseMutationOptions<UpdateConcertConcertsConcertIdPatchResponse, UpdateConcertConcertsConcertIdPatchError, Options<UpdateConcertConcertsConcertIdPatchData>> = {
         mutationFn: async (fnOptions) => {
             const { data } = await updateConcertConcertsConcertIdPatch({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Create Setlist Item
+ */
+export const createSetlistItemConcertsConcertIdSetlistPostMutation = (options?: Partial<Options<CreateSetlistItemConcertsConcertIdSetlistPostData>>): UseMutationOptions<CreateSetlistItemConcertsConcertIdSetlistPostResponse, CreateSetlistItemConcertsConcertIdSetlistPostError, Options<CreateSetlistItemConcertsConcertIdSetlistPostData>> => {
+    const mutationOptions: UseMutationOptions<CreateSetlistItemConcertsConcertIdSetlistPostResponse, CreateSetlistItemConcertsConcertIdSetlistPostError, Options<CreateSetlistItemConcertsConcertIdSetlistPostData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await createSetlistItemConcertsConcertIdSetlistPost({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Delete Setlist Item
+ */
+export const deleteSetlistItemConcertsConcertIdSetlistItemIdDeleteMutation = (options?: Partial<Options<DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteData>>): UseMutationOptions<DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteResponse, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteError, Options<DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteData>> => {
+    const mutationOptions: UseMutationOptions<DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteResponse, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteError, Options<DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await deleteSetlistItemConcertsConcertIdSetlistItemIdDelete({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const listMediaArtistsMediaGetQueryKey = (options?: Options<ListMediaArtistsMediaGetData>) => createQueryKey('listMediaArtistsMediaGet', options);
+
+/**
+ * List Media
+ */
+export const listMediaArtistsMediaGetOptions = (options?: Options<ListMediaArtistsMediaGetData>) => {
+    return queryOptions({
+        queryFn: async ({ queryKey, signal }) => {
+            const { data } = await listMediaArtistsMediaGet({
+                ...options,
+                ...queryKey[0],
+                signal,
+                throwOnError: true
+            });
+            return data;
+        },
+        queryKey: listMediaArtistsMediaGetQueryKey(options)
+    });
+};
+
+export const listMediaArtistsMediaGetInfiniteQueryKey = (options?: Options<ListMediaArtistsMediaGetData>): QueryKey<Options<ListMediaArtistsMediaGetData>> => createQueryKey('listMediaArtistsMediaGet', options, true);
+
+/**
+ * List Media
+ */
+export const listMediaArtistsMediaGetInfiniteOptions = (options?: Options<ListMediaArtistsMediaGetData>) => {
+    return infiniteQueryOptions<ListMediaArtistsMediaGetResponse, ListMediaArtistsMediaGetError, InfiniteData<ListMediaArtistsMediaGetResponse>, QueryKey<Options<ListMediaArtistsMediaGetData>>, number | Pick<QueryKey<Options<ListMediaArtistsMediaGetData>>[0], 'body' | 'headers' | 'path' | 'query'>>(
+    // @ts-ignore
+    {
+        queryFn: async ({ pageParam, queryKey, signal }) => {
+            // @ts-ignore
+            const page: Pick<QueryKey<Options<ListMediaArtistsMediaGetData>>[0], 'body' | 'headers' | 'path' | 'query'> = typeof pageParam === 'object' ? pageParam : {
+                query: {
+                    offset: pageParam
+                }
+            };
+            const params = createInfiniteParams(queryKey, page);
+            const { data } = await listMediaArtistsMediaGet({
+                ...options,
+                ...params,
+                signal,
+                throwOnError: true
+            });
+            return data;
+        },
+        queryKey: listMediaArtistsMediaGetInfiniteQueryKey(options)
+    });
+};
+
+/**
+ * Upload Media
+ */
+export const uploadMediaArtistsMediaPostMutation = (options?: Partial<Options<UploadMediaArtistsMediaPostData>>): UseMutationOptions<UploadMediaArtistsMediaPostResponse, UploadMediaArtistsMediaPostError, Options<UploadMediaArtistsMediaPostData>> => {
+    const mutationOptions: UseMutationOptions<UploadMediaArtistsMediaPostResponse, UploadMediaArtistsMediaPostError, Options<UploadMediaArtistsMediaPostData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await uploadMediaArtistsMediaPost({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Delete Media
+ */
+export const deleteMediaArtistsMediaAssetIdDeleteMutation = (options?: Partial<Options<DeleteMediaArtistsMediaAssetIdDeleteData>>): UseMutationOptions<DeleteMediaArtistsMediaAssetIdDeleteResponse, DeleteMediaArtistsMediaAssetIdDeleteError, Options<DeleteMediaArtistsMediaAssetIdDeleteData>> => {
+    const mutationOptions: UseMutationOptions<DeleteMediaArtistsMediaAssetIdDeleteResponse, DeleteMediaArtistsMediaAssetIdDeleteError, Options<DeleteMediaArtistsMediaAssetIdDeleteData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await deleteMediaArtistsMediaAssetIdDelete({
                 ...options,
                 ...fnOptions,
                 throwOnError: true

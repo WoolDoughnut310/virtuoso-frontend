@@ -14,7 +14,7 @@ export const clientLoader = artistOnlyLoader;
 
 export default function ArtistDashboard() {
     const navigate = useNavigate();
-    // const artistId = useCurrentArtistID();
+    const artistId = useCurrentArtistID();
     const createConcert = useMutation({
         ...createConcertConcertsCreatePostMutation(),
         onSuccess: (data: ConcertPublic) => {
@@ -22,7 +22,7 @@ export default function ArtistDashboard() {
         },
     });
 
-    // const query = useArtistConcerts(artistId);
+    const query = useArtistConcerts(artistId);
 
     const handleCreateConcert = useCallback(async () => {
         if (createConcert.isPending) return;
@@ -61,7 +61,7 @@ export default function ArtistDashboard() {
 
             <hr className="border-gray-700 mb-8" />
 
-            {/* <ConcertListings query={query} /> */}
+            <ConcertListings query={query} />
         </div>
     );
 }

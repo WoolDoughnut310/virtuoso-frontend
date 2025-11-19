@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { type Control, Controller, useFormState } from "react-hook-form";
 import { type ConcertUpdate } from "~/client";
-import { uploadConcertImageConcertsUploadImageConcertIdPostMutation } from "~/client/@tanstack/react-query.gen";
+import { uploadConcertImageConcertsConcertIdImagePostMutation } from "~/client/@tanstack/react-query.gen";
 import HeroImage from "./HeroImage";
 import { Upload } from "lucide-react";
 import { useId } from "react";
@@ -15,7 +15,7 @@ interface ImageUploaderProps {
 export function ImageUploader({ control, concert_id }: ImageUploaderProps) {
     const { errors } = useFormState({ control });
     const uploadImage = useMutation({
-        ...uploadConcertImageConcertsUploadImageConcertIdPostMutation(),
+        ...uploadConcertImageConcertsConcertIdImagePostMutation()
     });
 
     const fileInputId = useId();

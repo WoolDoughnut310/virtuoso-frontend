@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostErrors, CreateConcertConcertsCreatePostResponses, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteErrors, DeleteConcertConcertsConcertIdDeleteResponses, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetErrors, DiscoverConcertsConcertsDiscoverGetResponses, GetConcertConcertsConcertIdGetData, GetConcertConcertsConcertIdGetErrors, GetConcertConcertsConcertIdGetResponses, LoginUserTokenPostData, LoginUserTokenPostErrors, LoginUserTokenPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetErrors, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchErrors, UpdateConcertConcertsConcertIdPatchResponses, UploadConcertImageConcertsUploadImageConcertIdPostData, UploadConcertImageConcertsUploadImageConcertIdPostErrors, UploadConcertImageConcertsUploadImageConcertIdPostResponses, UploadSongConcertsUploadSongConcertIdPostData, UploadSongConcertsUploadSongConcertIdPostErrors, UploadSongConcertsUploadSongConcertIdPostResponses } from './types.gen';
+import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostErrors, CreateConcertConcertsCreatePostResponses, CreateSetlistItemConcertsConcertIdSetlistPostData, CreateSetlistItemConcertsConcertIdSetlistPostErrors, CreateSetlistItemConcertsConcertIdSetlistPostResponses, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteErrors, DeleteConcertConcertsConcertIdDeleteResponses, DeleteMediaArtistsMediaAssetIdDeleteData, DeleteMediaArtistsMediaAssetIdDeleteErrors, DeleteMediaArtistsMediaAssetIdDeleteResponses, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteData, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteErrors, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteResponses, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetErrors, DiscoverConcertsConcertsDiscoverGetResponses, GetConcertConcertsConcertIdGetData, GetConcertConcertsConcertIdGetErrors, GetConcertConcertsConcertIdGetResponses, ListMediaArtistsMediaGetData, ListMediaArtistsMediaGetErrors, ListMediaArtistsMediaGetResponses, LoginUserTokenPostData, LoginUserTokenPostErrors, LoginUserTokenPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetErrors, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchErrors, UpdateConcertConcertsConcertIdPatchResponses, UploadConcertImageConcertsConcertIdImagePostData, UploadConcertImageConcertsConcertIdImagePostErrors, UploadConcertImageConcertsConcertIdImagePostResponses, UploadMediaArtistsMediaPostData, UploadMediaArtistsMediaPostErrors, UploadMediaArtistsMediaPostResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -60,25 +60,10 @@ export const registerUserRegisterPost = <ThrowOnError extends boolean = false>(o
 /**
  * Upload Concert Image
  */
-export const uploadConcertImageConcertsUploadImageConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<UploadConcertImageConcertsUploadImageConcertIdPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<UploadConcertImageConcertsUploadImageConcertIdPostResponses, UploadConcertImageConcertsUploadImageConcertIdPostErrors, ThrowOnError>({
+export const uploadConcertImageConcertsConcertIdImagePost = <ThrowOnError extends boolean = false>(options: Options<UploadConcertImageConcertsConcertIdImagePostData, ThrowOnError>) => {
+    return (options.client ?? client).post<UploadConcertImageConcertsConcertIdImagePostResponses, UploadConcertImageConcertsConcertIdImagePostErrors, ThrowOnError>({
         ...formDataBodySerializer,
-        url: '/concerts/upload-image/{concert_id}',
-        ...options,
-        headers: {
-            'Content-Type': null,
-            ...options.headers
-        }
-    });
-};
-
-/**
- * Upload Song
- */
-export const uploadSongConcertsUploadSongConcertIdPost = <ThrowOnError extends boolean = false>(options: Options<UploadSongConcertsUploadSongConcertIdPostData, ThrowOnError>) => {
-    return (options.client ?? client).post<UploadSongConcertsUploadSongConcertIdPostResponses, UploadSongConcertsUploadSongConcertIdPostErrors, ThrowOnError>({
-        ...formDataBodySerializer,
-        url: '/concerts/upload-song/{concert_id}',
+        url: '/concerts/{concert_id}/image',
         ...options,
         headers: {
             'Content-Type': null,
@@ -138,5 +123,64 @@ export const updateConcertConcertsConcertIdPatch = <ThrowOnError extends boolean
             'Content-Type': 'application/json',
             ...options.headers
         }
+    });
+};
+
+/**
+ * Create Setlist Item
+ */
+export const createSetlistItemConcertsConcertIdSetlistPost = <ThrowOnError extends boolean = false>(options: Options<CreateSetlistItemConcertsConcertIdSetlistPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<CreateSetlistItemConcertsConcertIdSetlistPostResponses, CreateSetlistItemConcertsConcertIdSetlistPostErrors, ThrowOnError>({
+        url: '/concerts/{concert_id}/setlist',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Delete Setlist Item
+ */
+export const deleteSetlistItemConcertsConcertIdSetlistItemIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteResponses, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteErrors, ThrowOnError>({
+        url: '/concerts/{concert_id}/setlist/{item_id}',
+        ...options
+    });
+};
+
+/**
+ * List Media
+ */
+export const listMediaArtistsMediaGet = <ThrowOnError extends boolean = false>(options?: Options<ListMediaArtistsMediaGetData, ThrowOnError>) => {
+    return (options?.client ?? client).get<ListMediaArtistsMediaGetResponses, ListMediaArtistsMediaGetErrors, ThrowOnError>({
+        url: '/artists/media',
+        ...options
+    });
+};
+
+/**
+ * Upload Media
+ */
+export const uploadMediaArtistsMediaPost = <ThrowOnError extends boolean = false>(options: Options<UploadMediaArtistsMediaPostData, ThrowOnError>) => {
+    return (options.client ?? client).post<UploadMediaArtistsMediaPostResponses, UploadMediaArtistsMediaPostErrors, ThrowOnError>({
+        ...formDataBodySerializer,
+        url: '/artists/media',
+        ...options,
+        headers: {
+            'Content-Type': null,
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * Delete Media
+ */
+export const deleteMediaArtistsMediaAssetIdDelete = <ThrowOnError extends boolean = false>(options: Options<DeleteMediaArtistsMediaAssetIdDeleteData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteMediaArtistsMediaAssetIdDeleteResponses, DeleteMediaArtistsMediaAssetIdDeleteErrors, ThrowOnError>({
+        url: '/artists/media/{asset_id}',
+        ...options
     });
 };

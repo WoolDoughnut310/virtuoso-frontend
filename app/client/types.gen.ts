@@ -49,9 +49,9 @@ export type BodyLoginUserTokenPost = {
 };
 
 /**
- * Body_upload_concert_image_concerts_upload_image__concert_id__post
+ * Body_upload_concert_image_concerts__concert_id__image_post
  */
-export type BodyUploadConcertImageConcertsUploadImageConcertIdPost = {
+export type BodyUploadConcertImageConcertsConcertIdImagePost = {
     /**
      * File
      */
@@ -59,9 +59,9 @@ export type BodyUploadConcertImageConcertsUploadImageConcertIdPost = {
 };
 
 /**
- * Body_upload_song_concerts_upload_song__concert_id__post
+ * Body_upload_media_artists_media_post
  */
-export type BodyUploadSongConcertsUploadSongConcertIdPost = {
+export type BodyUploadMediaArtistsMediaPost = {
     /**
      * File
      */
@@ -101,6 +101,43 @@ export type ConcertPublic = {
      */
     id: number;
     artist: ArtistPublic;
+    /**
+     * Setlist Items
+     */
+    setlist_items: Array<ConcertSetlistItemPublic>;
+};
+
+/**
+ * ConcertSetlistItemCreate
+ */
+export type ConcertSetlistItemCreate = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Track Number
+     */
+    track_number: number;
+};
+
+/**
+ * ConcertSetlistItemPublic
+ */
+export type ConcertSetlistItemPublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Track Number
+     */
+    track_number: number;
+    /**
+     * Id
+     */
+    id: number;
+    asset: MediaAssetPublic;
 };
 
 /**
@@ -154,6 +191,24 @@ export type ImageUploadResponse = {
 };
 
 /**
+ * MediaAssetPublic
+ */
+export type MediaAssetPublic = {
+    /**
+     * Duration
+     */
+    duration: number;
+    /**
+     * Codec
+     */
+    codec: string;
+    /**
+     * Id
+     */
+    id: number;
+};
+
+/**
  * PaginatedConcerts
  */
 export type PaginatedConcerts = {
@@ -161,6 +216,20 @@ export type PaginatedConcerts = {
      * Items
      */
     items: Array<ConcertPublic>;
+    /**
+     * Hasmore
+     */
+    hasMore: boolean;
+};
+
+/**
+ * PaginatedMediaAssets
+ */
+export type PaginatedMediaAssets = {
+    /**
+     * Items
+     */
+    items: Array<MediaAssetPublic>;
     /**
      * Hasmore
      */
@@ -306,8 +375,8 @@ export type RegisterUserRegisterPostResponses = {
 
 export type RegisterUserRegisterPostResponse = RegisterUserRegisterPostResponses[keyof RegisterUserRegisterPostResponses];
 
-export type UploadConcertImageConcertsUploadImageConcertIdPostData = {
-    body: BodyUploadConcertImageConcertsUploadImageConcertIdPost;
+export type UploadConcertImageConcertsConcertIdImagePostData = {
+    body: BodyUploadConcertImageConcertsConcertIdImagePost;
     path: {
         /**
          * Concert Id
@@ -315,54 +384,26 @@ export type UploadConcertImageConcertsUploadImageConcertIdPostData = {
         concert_id: number;
     };
     query?: never;
-    url: '/concerts/upload-image/{concert_id}';
+    url: '/concerts/{concert_id}/image';
 };
 
-export type UploadConcertImageConcertsUploadImageConcertIdPostErrors = {
+export type UploadConcertImageConcertsConcertIdImagePostErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type UploadConcertImageConcertsUploadImageConcertIdPostError = UploadConcertImageConcertsUploadImageConcertIdPostErrors[keyof UploadConcertImageConcertsUploadImageConcertIdPostErrors];
+export type UploadConcertImageConcertsConcertIdImagePostError = UploadConcertImageConcertsConcertIdImagePostErrors[keyof UploadConcertImageConcertsConcertIdImagePostErrors];
 
-export type UploadConcertImageConcertsUploadImageConcertIdPostResponses = {
+export type UploadConcertImageConcertsConcertIdImagePostResponses = {
     /**
      * Successful Response
      */
     200: ImageUploadResponse;
 };
 
-export type UploadConcertImageConcertsUploadImageConcertIdPostResponse = UploadConcertImageConcertsUploadImageConcertIdPostResponses[keyof UploadConcertImageConcertsUploadImageConcertIdPostResponses];
-
-export type UploadSongConcertsUploadSongConcertIdPostData = {
-    body: BodyUploadSongConcertsUploadSongConcertIdPost;
-    path: {
-        /**
-         * Concert Id
-         */
-        concert_id: number;
-    };
-    query?: never;
-    url: '/concerts/upload-song/{concert_id}';
-};
-
-export type UploadSongConcertsUploadSongConcertIdPostErrors = {
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type UploadSongConcertsUploadSongConcertIdPostError = UploadSongConcertsUploadSongConcertIdPostErrors[keyof UploadSongConcertsUploadSongConcertIdPostErrors];
-
-export type UploadSongConcertsUploadSongConcertIdPostResponses = {
-    /**
-     * Successful Response
-     */
-    200: unknown;
-};
+export type UploadConcertImageConcertsConcertIdImagePostResponse = UploadConcertImageConcertsConcertIdImagePostResponses[keyof UploadConcertImageConcertsConcertIdImagePostResponses];
 
 export type CreateConcertConcertsCreatePostData = {
     body?: never;
@@ -534,3 +575,156 @@ export type UpdateConcertConcertsConcertIdPatchResponses = {
 };
 
 export type UpdateConcertConcertsConcertIdPatchResponse = UpdateConcertConcertsConcertIdPatchResponses[keyof UpdateConcertConcertsConcertIdPatchResponses];
+
+export type CreateSetlistItemConcertsConcertIdSetlistPostData = {
+    body: ConcertSetlistItemCreate;
+    path: {
+        /**
+         * Concert Id
+         */
+        concert_id: number;
+    };
+    query?: never;
+    url: '/concerts/{concert_id}/setlist';
+};
+
+export type CreateSetlistItemConcertsConcertIdSetlistPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreateSetlistItemConcertsConcertIdSetlistPostError = CreateSetlistItemConcertsConcertIdSetlistPostErrors[keyof CreateSetlistItemConcertsConcertIdSetlistPostErrors];
+
+export type CreateSetlistItemConcertsConcertIdSetlistPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: ConcertSetlistItemPublic;
+};
+
+export type CreateSetlistItemConcertsConcertIdSetlistPostResponse = CreateSetlistItemConcertsConcertIdSetlistPostResponses[keyof CreateSetlistItemConcertsConcertIdSetlistPostResponses];
+
+export type DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Item Id
+         */
+        item_id: number;
+        /**
+         * Concert Id
+         */
+        concert_id: number;
+    };
+    query?: never;
+    url: '/concerts/{concert_id}/setlist/{item_id}';
+};
+
+export type DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteError = DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteErrors[keyof DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteErrors];
+
+export type DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteResponse = DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteResponses[keyof DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteResponses];
+
+export type ListMediaArtistsMediaGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Limit
+         */
+        limit?: number;
+        /**
+         * Offset
+         */
+        offset?: number;
+    };
+    url: '/artists/media';
+};
+
+export type ListMediaArtistsMediaGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type ListMediaArtistsMediaGetError = ListMediaArtistsMediaGetErrors[keyof ListMediaArtistsMediaGetErrors];
+
+export type ListMediaArtistsMediaGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: PaginatedMediaAssets;
+};
+
+export type ListMediaArtistsMediaGetResponse = ListMediaArtistsMediaGetResponses[keyof ListMediaArtistsMediaGetResponses];
+
+export type UploadMediaArtistsMediaPostData = {
+    body: BodyUploadMediaArtistsMediaPost;
+    path?: never;
+    query?: never;
+    url: '/artists/media';
+};
+
+export type UploadMediaArtistsMediaPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type UploadMediaArtistsMediaPostError = UploadMediaArtistsMediaPostErrors[keyof UploadMediaArtistsMediaPostErrors];
+
+export type UploadMediaArtistsMediaPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: MediaAssetPublic;
+};
+
+export type UploadMediaArtistsMediaPostResponse = UploadMediaArtistsMediaPostResponses[keyof UploadMediaArtistsMediaPostResponses];
+
+export type DeleteMediaArtistsMediaAssetIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Asset Id
+         */
+        asset_id: number;
+    };
+    query?: never;
+    url: '/artists/media/{asset_id}';
+};
+
+export type DeleteMediaArtistsMediaAssetIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteMediaArtistsMediaAssetIdDeleteError = DeleteMediaArtistsMediaAssetIdDeleteErrors[keyof DeleteMediaArtistsMediaAssetIdDeleteErrors];
+
+export type DeleteMediaArtistsMediaAssetIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type DeleteMediaArtistsMediaAssetIdDeleteResponse = DeleteMediaArtistsMediaAssetIdDeleteResponses[keyof DeleteMediaArtistsMediaAssetIdDeleteResponses];
