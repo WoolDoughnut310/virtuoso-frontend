@@ -14,7 +14,8 @@ export default [
         route("discover", "routes/discover.tsx"),
         route("concert/:concert_id", "routes/concert.tsx"),
         ...prefix("artist", [
-            route("dashboard", "routes/dashboard.tsx"),
+            route("concerts", "routes/artist/concerts.tsx"),
+            route("media", "routes/artist/media.tsx")
         ])
     ]),
     route("concert/:concert_id/live", "routes/live.tsx"),
