@@ -350,6 +350,20 @@ export type LoginUserTokenPostResponses = {
     200: unknown;
 };
 
+export type LogoutLogoutPostData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/logout';
+};
+
+export type LogoutLogoutPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
 export type RegisterUserRegisterPostData = {
     body: UserCreate;
     path?: never;

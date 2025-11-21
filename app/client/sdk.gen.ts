@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostErrors, CreateConcertConcertsCreatePostResponses, CreateSetlistItemConcertsConcertIdSetlistPostData, CreateSetlistItemConcertsConcertIdSetlistPostErrors, CreateSetlistItemConcertsConcertIdSetlistPostResponses, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteErrors, DeleteConcertConcertsConcertIdDeleteResponses, DeleteMediaArtistsMediaAssetIdDeleteData, DeleteMediaArtistsMediaAssetIdDeleteErrors, DeleteMediaArtistsMediaAssetIdDeleteResponses, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteData, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteErrors, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteResponses, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetErrors, DiscoverConcertsConcertsDiscoverGetResponses, GetConcertConcertsConcertIdGetData, GetConcertConcertsConcertIdGetErrors, GetConcertConcertsConcertIdGetResponses, ListMediaArtistsMediaGetData, ListMediaArtistsMediaGetErrors, ListMediaArtistsMediaGetResponses, LoginUserTokenPostData, LoginUserTokenPostErrors, LoginUserTokenPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetErrors, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchErrors, UpdateConcertConcertsConcertIdPatchResponses, UploadConcertImageConcertsConcertIdImagePostData, UploadConcertImageConcertsConcertIdImagePostErrors, UploadConcertImageConcertsConcertIdImagePostResponses, UploadMediaArtistsMediaPostData, UploadMediaArtistsMediaPostErrors, UploadMediaArtistsMediaPostResponses } from './types.gen';
+import type { CreateConcertConcertsCreatePostData, CreateConcertConcertsCreatePostErrors, CreateConcertConcertsCreatePostResponses, CreateSetlistItemConcertsConcertIdSetlistPostData, CreateSetlistItemConcertsConcertIdSetlistPostErrors, CreateSetlistItemConcertsConcertIdSetlistPostResponses, DeleteConcertConcertsConcertIdDeleteData, DeleteConcertConcertsConcertIdDeleteErrors, DeleteConcertConcertsConcertIdDeleteResponses, DeleteMediaArtistsMediaAssetIdDeleteData, DeleteMediaArtistsMediaAssetIdDeleteErrors, DeleteMediaArtistsMediaAssetIdDeleteResponses, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteData, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteErrors, DeleteSetlistItemConcertsConcertIdSetlistItemIdDeleteResponses, DiscoverConcertsConcertsDiscoverGetData, DiscoverConcertsConcertsDiscoverGetErrors, DiscoverConcertsConcertsDiscoverGetResponses, GetConcertConcertsConcertIdGetData, GetConcertConcertsConcertIdGetErrors, GetConcertConcertsConcertIdGetResponses, ListMediaArtistsMediaGetData, ListMediaArtistsMediaGetErrors, ListMediaArtistsMediaGetResponses, LoginUserTokenPostData, LoginUserTokenPostErrors, LoginUserTokenPostResponses, LogoutLogoutPostData, LogoutLogoutPostResponses, ReadUsersMeMeGetData, ReadUsersMeMeGetErrors, ReadUsersMeMeGetResponses, RegisterUserRegisterPostData, RegisterUserRegisterPostErrors, RegisterUserRegisterPostResponses, UpdateConcertConcertsConcertIdPatchData, UpdateConcertConcertsConcertIdPatchErrors, UpdateConcertConcertsConcertIdPatchResponses, UploadConcertImageConcertsConcertIdImagePostData, UploadConcertImageConcertsConcertIdImagePostErrors, UploadConcertImageConcertsConcertIdImagePostResponses, UploadMediaArtistsMediaPostData, UploadMediaArtistsMediaPostErrors, UploadMediaArtistsMediaPostResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -40,6 +40,16 @@ export const loginUserTokenPost = <ThrowOnError extends boolean = false>(options
             'Content-Type': 'application/x-www-form-urlencoded',
             ...options.headers
         }
+    });
+};
+
+/**
+ * Logout
+ */
+export const logoutLogoutPost = <ThrowOnError extends boolean = false>(options?: Options<LogoutLogoutPostData, ThrowOnError>) => {
+    return (options?.client ?? client).post<LogoutLogoutPostResponses, unknown, ThrowOnError>({
+        url: '/logout',
+        ...options
     });
 };
 
