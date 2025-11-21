@@ -22,10 +22,34 @@ export default function ConcertListings({
                 <div className="flex flex-row gap-4 flex-wrap p-8">
                     {isPending ? (
                         [...Array(3)].map((_, i) => (
-                            <Skeleton
+                            <div
                                 key={i}
-                                className="h-28 w-full bg-gray-700 rounded-lg"
-                            />
+                                className="flex flex-col bg-gray-800/40 border border-gray-700 rounded-xl overflow-hidden w-[540px]"
+                            >
+                                {/* Image Skeleton */}
+                                <Skeleton className="h-60 w-full bg-gray-700" />
+
+                                {/* Bottom Content */}
+                                <div className="p-4 flex flex-col gap-3">
+                                    {/* Title */}
+                                    <Skeleton className="h-5 w-3/4 bg-gray-700 rounded" />
+
+                                    {/* Subtitle */}
+                                    <Skeleton className="h-4 w-1/2 bg-gray-700 rounded" />
+
+                                    {/* Metadata Row */}
+                                    <div className="flex flex-row justify-between mt-2">
+                                        {/* Left side icons (date + attendance) */}
+                                        <div className="flex flex-col gap-2">
+                                            <Skeleton className="h-4 w-20 bg-gray-700 rounded" />
+                                            <Skeleton className="h-4 w-24 bg-gray-700 rounded" />
+                                        </div>
+
+                                        {/* Price */}
+                                        <Skeleton className="h-4 w-16 bg-gray-700 rounded" />
+                                    </div>
+                                </div>
+                            </div>
                         ))
                     ) : data && data.items.length > 0 ? (
                         data.items.map((concert) => (
