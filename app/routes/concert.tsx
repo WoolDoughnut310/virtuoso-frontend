@@ -1,5 +1,4 @@
 import type { Route } from "./+types/concert";
-import ConcertSkeleton from "~/components/ConcertSkeleton";
 import { useConcertData } from "~/lib/useConcertData";
 import { useIsOwner } from "~/lib/useIsOwner";
 import { Calendar } from "lucide-react";
@@ -10,6 +9,7 @@ import { type SubmitHandler, Controller, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import {
     deleteConcertConcertsConcertIdDeleteMutation,
+    getConcertConcertsConcertIdGetQueryKey,
     updateConcertConcertsConcertIdPatchMutation,
 } from "~/client/@tanstack/react-query.gen";
 import { ImageUploader } from "../components/ImageUploader";
@@ -49,12 +49,17 @@ export default function Concert({ params }: Route.ComponentProps) {
         ...updateConcertConcertsConcertIdPatchMutation(),
         onSuccess: () => {
             setIsEditing(false);
+            queryClient.invalidateQueries({
+                queryKey: getConcertConcertsConcertIdGetQueryKey({
+                    path: { concert_id },
+                }),
+            });
         },
     });
     const deleteConcert = useMutation({
         ...deleteConcertConcertsConcertIdDeleteMutation(),
         onSuccess: () => {
-            navigate("/artist/dashboard");
+            navigate("/artist/concerts");
         },
     });
 
@@ -88,7 +93,9 @@ export default function Concert({ params }: Route.ComponentProps) {
 
     return (
         <div className="overflow-y-scroll">
-            <title>{data.artist.name}: {data.name} - Virtuoso</title>
+            <title>
+                {data.artist.name}: {data.name} - Virtuoso
+            </title>
             <div className="flex flex-row min-h-[calc(100vh-132px)] px-16 py-[75px]">
                 <div className="flex basis-3/5 pr-8 border-r-2 border-[#C39F45]/80">
                     {isEditingMode ? (
@@ -203,7 +210,7 @@ export default function Concert({ params }: Route.ComponentProps) {
                             </button>
                             <button
                                 type="button"
-                                className={`${baseButtonClass} bg-red-700 hover:bg-red-800 text-sm py-2 px-4`}
+                                className={`${baseButtonClass} bg-red-700 hover:bg-red-800`}
                                 onClick={handleDelete}
                             >
                                 Delete Concert
